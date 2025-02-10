@@ -1,7 +1,7 @@
 @extends('templates.start-html')
 @include('components.navbar')
 <section class="my-5 px-[5%]">
-    <div class="w-[80%] m-auto">
+    <div class="w-[100%] m-auto">
         <form class="flex justify-between">
             <p class="text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Jelajahi Produk</p>
             <div class="flex items-center gap-2">
@@ -11,7 +11,7 @@
         </form>
     </div>
 
-    <div class="w-full flex justify-between mt-8">
+    <div class="w-full flex justify-between mt-8 my-20">
         <div id="left-content" class="w-[20%]">
             <div class="text-white bg-darkblue flex items-center px-3 py-1 rounded-tr-[12px] rounded-bl-[12px] mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">

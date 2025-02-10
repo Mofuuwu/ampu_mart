@@ -7,7 +7,7 @@
         <img src="{{asset('images/Frame 1.png')}}" alt="">
         <div class="absolute text-center left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 w-full px-[10%]">
             <p class="font-semibold text-5xl text-white mb-4 font-sour-gummy">Sistem Toko Online Universitas Amikom Purwokerto Mudah Dan Praktis</p>
-            <a href="" class="font-bold text-lg text-blue-300 shadow-md hover:text-lightblue hover:bg-slate-200 bg-darkblue px-5 py-2 rounded-[14px] font-sour-gummy">Jelajahi Produk > </a>
+            <a href="/jelajahi-produk" class="font-bold text-lg text-blue-300 shadow-md hover:text-lightblue hover:bg-slate-200 bg-darkblue px-5 py-2 rounded-[14px] font-sour-gummy">Jelajahi Produk > </a>
         </div>
     </div>
 </section>
@@ -77,90 +77,14 @@
         <p class="text-md font-semibold text-lightblue font-sour-gummy">Terbaru</p>
     </div>
     <div id="fav-card-container" class="flex gap-4 mt-4 justify-between w-full">
-        <div class="card w-[220px] max-w-[220px] min-w-[220px]">
-            <div class="min-h-[220px] max-h-200px w-full bg-slate-300 rounded-[16px] overflow-hidden bg-[url('https://statik.tempo.co/data/2019/12/06/id_895343/895343_720.jpg')] bg-cover bg-center relative">
-                <p class="absolute py-2 px-6 rounded-br-[16px] bg-lightblue bg-opacity-80 text-white font-semibold font-sour-gummy">200 Tersisa</p>
-            </div>
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xl font-bold text-darkblue font-sour-gummy">Apel Segar 1kg</p>
-                    <p class="text-md font-bold text-lightblue font-sour-gummy">16.000</p>
-                </div>
-                <div class="bg-green-500 h-fit p-2 rounded-[10px] text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="card w-[220px] max-w-[220px] min-w-[220px]">
-            <div class="min-h-[220px] max-h-200px w-full bg-slate-300 rounded-[16px] overflow-hidden bg-[url('https://statik.tempo.co/data/2019/12/06/id_895343/895343_720.jpg')] bg-cover bg-center relative">
-                <p class="absolute py-2 px-6 rounded-br-[16px] bg-lightblue bg-opacity-80 text-white font-semibold font-sour-gummy">200 Tersisa</p>
-            </div>
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xl font-bold text-darkblue font-sour-gummy">Apel Segar 1kg</p>
-                    <p class="text-md font-bold text-lightblue font-sour-gummy">16.000</p>
-                </div>
-                <div class="bg-green-500 h-fit p-2 rounded-[10px] text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="card w-[220px] max-w-[220px] min-w-[220px]">
-            <div class="min-h-[220px] max-h-200px w-full bg-slate-300 rounded-[16px] overflow-hidden bg-[url('https://statik.tempo.co/data/2019/12/06/id_895343/895343_720.jpg')] bg-cover bg-center relative">
-                <p class="absolute py-2 px-6 rounded-br-[16px] bg-lightblue bg-opacity-80 text-white font-semibold font-sour-gummy">200 Tersisa</p>
-            </div>
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xl font-bold text-darkblue font-sour-gummy">Apel Segar 1kg</p>
-                    <p class="text-md font-bold text-lightblue font-sour-gummy">16.000</p>
-                </div>
-                <div class="bg-green-500 h-fit p-2 rounded-[10px] text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="card w-[220px] max-w-[220px] min-w-[220px]">
-            <div class="min-h-[220px] max-h-200px w-full bg-slate-300 rounded-[16px] overflow-hidden bg-[url('https://statik.tempo.co/data/2019/12/06/id_895343/895343_720.jpg')] bg-cover bg-center relative">
-                <p class="absolute py-2 px-6 rounded-br-[16px] bg-lightblue bg-opacity-80 text-white font-semibold font-sour-gummy">200 Tersisa</p>
-            </div>
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xl font-bold text-darkblue font-sour-gummy">Apel Segar 1kg</p>
-                    <p class="text-md font-bold text-lightblue font-sour-gummy">16.000</p>
-                </div>
-                <div class="bg-green-500 h-fit p-2 rounded-[10px] text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="card w-[220px] max-w-[220px] min-w-[220px]">
-            <div class="min-h-[220px] max-h-200px w-full bg-slate-300 rounded-[16px] overflow-hidden bg-[url('https://statik.tempo.co/data/2019/12/06/id_895343/895343_720.jpg')] bg-cover bg-center relative">
-                <p class="absolute py-2 px-6 rounded-br-[16px] bg-lightblue bg-opacity-80 text-white font-semibold font-sour-gummy">200 Tersisa</p>
-            </div>
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xl font-bold text-darkblue font-sour-gummy">Apel Segar 1kg</p>
-                    <p class="text-md font-bold text-lightblue font-sour-gummy">16.000</p>
-                </div>
-                <div class="bg-green-500 h-fit p-2 rounded-[10px] text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        
+    @include('components.card')
+    @include('components.card')
+    @include('components.card')
+    @include('components.card')
+    @include('components.card')
     </div>
     <div class="w-full flex justify-center mt-4">
-        <a href="" class="font-semibold text-white shadow-md hover:text-slate-200 hover:bg-blue-600 bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Semua Produk ></a>
+        <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:text-slate-200 hover:bg-blue-600 bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Semua Produk ></a>
     </div>
     <div id="newest-card-container">
         <div>

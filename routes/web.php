@@ -13,3 +13,17 @@ Route::get('/jelajahi-produk', function () {
 Route::get('/keranjang', function () {
     return view('public/keranjang');
 });
+
+Route::get('/checkout', function () {
+    return view('public/checkout');
+});
+
+
+Route::get('/jelajahi-produk/detail', function () {
+    return view('public/detail-page');
+});
+
+
+Route::get('/profile', function () {
+    return view('auth/profile');
+});
