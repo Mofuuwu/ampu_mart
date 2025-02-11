@@ -29,17 +29,18 @@
                 <div class="flex justify-between font-sour-gummy text-darkblue">
                     <p>Info keranjang</p>
                 </div>
-                <div class="bg-gray-200 h-fit p-5">
+                <div class="bg-slate-200 h-fit p-5">
                     <div>
-                        <p class="flex justify-between text-darkblue">Total Barang :</p>
-                        <p class="flex justify-between text-darkblue">98</p>
+                        <p class="flex justify-between text-darkblue font-sour-gummy">Total Barang :</p>
+                        <p class="flex justify-between text-darkblue font-bold text-xl">98</p>
                     </div>
+                    <div class="min-w-full h-[2px] bg-opacity-80 bg-darkblue my-2"></div>
                     <div>
-                        <p class="flex justify-between text-darkblue">Total Harga :</p>
-                        <p class="flex justify-between text-darkblue">1.300.000</p>
+                        <p class="flex justify-between text-darkblue font-sour-gummy">Total Harga :</p>
+                        <p class="flex justify-between text-darkblue font-bold text-2xl">1.300.000</p>
                     </div>
                 </div>
-                <a href="/checkout" class="bg-gray-200 h-fit px-3 py-1 mt-2 cursor-pointer flex justify-center items-center text-darkblue font-semibold">
+                <a href="/checkout" class="bg-lightblue h-fit px-3 py-2 mt-2 cursor-pointer flex justify-center items-center text-white hover:bg-hoverblue font-semibold font-sour-gummy">
                     Checkout Sekarang
                 </a>
             </div>

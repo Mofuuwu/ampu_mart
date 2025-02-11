@@ -27,3 +27,11 @@ Route::get('/jelajahi-produk/detail', function () {
 Route::get('/profile', function () {
     return view('auth/profile');
 });
+
+Route::get('/login', function () {
+    return view('auth/login');
+});
+
+Route::get('/register', function () {
+    return view('auth/register');
+});

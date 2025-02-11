@@ -17,8 +17,11 @@ export default {
             }, 
             colors: {
                 lightblue: '#0295CE',
+                midblue: '#006D97',
+                hoverblue: '#147EA7',
                 darkblue: '#004976',
                 custompurple: '#505398',
+                customgray: '#F1F1F1',
             }
         },
     },

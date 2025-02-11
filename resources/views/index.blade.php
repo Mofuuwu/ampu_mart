@@ -7,7 +7,7 @@
         <img src="{{asset('images/Frame 1.png')}}" alt="">
         <div class="absolute text-center left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 w-full px-[10%]">
             <p class="font-semibold text-5xl text-white mb-4 font-sour-gummy">Sistem Toko Online Universitas Amikom Purwokerto Mudah Dan Praktis</p>
-            <a href="/jelajahi-produk" class="font-bold text-lg text-blue-300 shadow-md hover:text-lightblue hover:bg-slate-200 bg-darkblue px-5 py-2 rounded-[14px] font-sour-gummy">Jelajahi Produk > </a>
+            <a href="/jelajahi-produk" class="font-bold text-lg text-blue-300 shadow-md hover:text-lightblue hover:bg-slate-200 transition-colors bg-darkblue px-5 py-2 rounded-[14px] font-sour-gummy">Jelajahi Produk > </a>
         </div>
     </div>
 </section>
@@ -61,7 +61,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel consequat nunc. Cras ut mattis tellus. Aenean eu ante vitae est consequat venenatis vel id lacus. Nam faucibus odio in sapien lacinia porttitor. Donec porta quam at dui lobortis, bibendum laoreet purus hendrerit. Nam nisi nunc, auctor id euismod auctor, tristique nec erat. In dignissim placerat egestas. Ut volutpat non libero et malesuada. Aenean ligula urna, vulputate sit amet lectus nec, porttitor dictum tellus.
             </p>
             <div class="w-full flex justify-end">
-                <a href="" class="font-semibold text-white shadow-md hover:text-slate-200 hover:bg-blue-600 bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Selengkapnya ></a>
+                <a href="" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Selengkapnya ></a>
             </div>
         </div>
         <div class=" w-[50%] px-[5%] min-h-[300px] max-h-[300px] flex justify-center items-center">
@@ -73,39 +73,53 @@
 <section class=" my-36 px-[5%] w-full">
     <p class="text-2xl text-center font-bold text-lightblue font-sour-gummy">Produk Kami</p>
     <div class="w-full flex justify-center gap-2 mt-2">
-        <p class="text-md font-semibold text-lightblue font-sour-gummy underline">Terlaris</p>
-        <p class="text-md font-semibold text-lightblue font-sour-gummy">Terbaru</p>
+        <p id="tab-terlaris" onclick="switchTab('terlaris')" class=" hover:opacity-80 cursor-pointer text-md font-semibold text-lightblue font-sour-gummy underline">Terlaris</p>
+        <p id="tab-terbaru" onclick="switchTab('terbaru')" class="hover:opacity-80 cursor-pointer text-md font-semibold text-lightblue font-sour-gummy">Terbaru</p>
     </div>
     <div id="fav-card-container" class="flex gap-4 mt-4 justify-between w-full">
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
+        @include('components.card')
+        @include('components.card')
+        @include('components.card')
+        @include('components.card')
+        @include('components.card')
+    </div>
+    <div id="newest-card-container" class="flex gap-4 mt-4 justify-between w-full hidden">
+            @include('components.card')
+            @include('components.card')
+            @include('components.card')
+            @include('components.card')
     </div>
     <div class="w-full flex justify-center mt-4">
-        <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:text-slate-200 hover:bg-blue-600 bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Semua Produk ></a>
-    </div>
-    <div id="newest-card-container">
-        <div>
-
-        </div>
+        <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Semua Produk ></a>
     </div>
 </section>
+<script>
+    // Fungsi untuk men-switch antara tab Terlaris dan Terbaru
+    function switchTab(tab) {
+        // Menyembunyikan semua kontainer produk
+        const favContainer = document.getElementById('fav-card-container');
+        const newestContainer = document.getElementById('newest-card-container');
+        const tabTerlaris = document.getElementById('tab-terlaris');
+        const tabTerbaru = document.getElementById('tab-terbaru');
 
-<!-- <section class=" my-36 px-[5%] w-full flex flex-col items-center">
-    <p class="text-2xl text-center font-bold text-lightblue font-sour-gummy">Ayo Belanja Di Ampu Mart Sekarang!!</p>
-    <div class="w-[80%] flex justify-between items-center mt-4">
-        <div class="w-[32%] min-h-[300px] bg-lightblue rounded-[16px] p-5">
-            <p>p</p>
-        </div>
-        <div class="w-[32%] min-h-[300px] bg-lightblue rounded-[16px]">
-            <p>p</p>
-        </div>
-        <div class="w-[32%] min-h-[300px] bg-lightblue rounded-[16px]">
-            <p>p</p>
-        </div>
-    </div>
-</section> -->
+        // Menampilkan kontainer sesuai dengan tab yang dipilih
+        if (tab === 'terlaris') {
+            favContainer.classList.remove('hidden');
+            newestContainer.classList.add('hidden');
+            tabTerlaris.classList.add('underline');
+            tabTerbaru.classList.remove('underline');
+        } else if (tab === 'terbaru') {
+            favContainer.classList.add('hidden');
+            newestContainer.classList.remove('hidden');
+            tabTerlaris.classList.remove('underline');
+            tabTerbaru.classList.add('underline');
+        }
+    }
+
+    // Menetapkan tab "Terlaris" aktif secara default
+    window.onload = function() {
+        switchTab('terlaris');
+    }
+</script>
 @include('components.footer')
 @extends('templates.end-html')
