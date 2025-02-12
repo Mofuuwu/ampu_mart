@@ -1,16 +1,15 @@
 # Selesai
 - membuat halaman checkout
 - membuat halaman detail barang
-
-
-#Belum Selesai
 - memperbaiki tampilan tagar
-- membuat halaman profil (ada histori pembelian)
 - membuat halaman login
 - membuat halaman registrasi
+
+#Hari Ini
 - membuat halaman menjadi responsif
-
-
 - mengecek kembali penamaan dan efisiensi kolom pada tabel
 - membuat relasi orm dan membuat guarded serta penyesuaian timestamps pada model
+
+#Belum Selesai
+- membuat halaman profil (ada histori pembelian)
 

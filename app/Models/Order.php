@@ -9,4 +9,14 @@ class Order extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
+    protected $guarded = [];
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function order_items() {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
+    public function voucher_usage() {
+        return $this->belongsTo(VoucherUsage::class, 'order_id');
+    }
 }
