@@ -1,37 +1,13 @@
 <?php
 
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/jelajahi-produk', function () {
-    return view('public/jelajahi-produk');
-});
-
-Route::get('/keranjang', function () {
-    return view('public/keranjang');
-});
-
-Route::get('/checkout', function () {
-    return view('public/checkout');
-});
-
-
-Route::get('/jelajahi-produk/detail', function () {
-    return view('public/detail-page');
-});
-
-
-Route::get('/profile', function () {
-    return view('auth/profile');
-});
-
-Route::get('/login', function () {
-    return view('auth/login');
-});
-
-Route::get('/register', function () {
-    return view('auth/register');
-});
+Route::get('/', [PublicController::class, 'index']);
+Route::get('/jelajahi-produk', [PublicController::class, 'explore_products']);
+Route::get('/keranjang', [PublicController::class, 'cart']);
+Route::get('/checkout', [PublicController::class, 'checkout']);
+Route::get('/jelajahi-produk/detail', [PublicController::class, 'detail']);
+Route::get('/profile', [PublicController::class, 'profile']);
+Route::get('/login', [PublicController::class, 'login']);
+Route::get('/register', [PublicController::class, 'register']);
