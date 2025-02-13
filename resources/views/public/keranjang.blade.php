@@ -8,8 +8,8 @@
     </div>
 
     <div class="mt-4">
-        <div class="flex justify-between gap-4">
-            <div class="w-[70%]">
+        <div class="flex flex-col-reverse md:flex-row justify-between gap-4">
+            <div class="w-full md:w-[70%]">
                 <div class="flex justify-between font-sour-gummy text-darkblue">
                     <p>Produk</p>
                     <p>Total</p>
@@ -25,7 +25,7 @@
                     @include('components.cart-card')
                 </div>
             </div>
-            <div class="w-[30%]">
+            <div class="w-full md:w-[30%]">
                 <div class="flex justify-between font-sour-gummy text-darkblue">
                     <p>Info keranjang</p>
                 </div>

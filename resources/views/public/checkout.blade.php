@@ -7,8 +7,8 @@
         </form>
     </div>
 
-    <div class="w-full flex justify-between mt-8 my-20 gap-2">
-        <div id="left-content" class="w-[60%]">
+    <div class="w-full flex flex-col md:flex-row justify-between mt-8 my-20 gap-2">
+        <div id="left-content" class="w-full md:w-[60%]">
             <div class=" bg-gray-200 p-5 rounded-[12px]">
                 <div class="mb-10">
                     <p class="text-darkblue font-bold">Informasi Kontak</p>
@@ -91,7 +91,7 @@
 
             </div>
         </div>
-        <div id="right-content" class="w-[40%]">
+        <div id="right-content" class="w-full md:w-[40%]">
             <div class=" bg-white p-4 rounded-[12px] w-full border-slate-400 border-2 border-opacity-50 mb-10">
                 <div class="flex justify-between text-darkblue ">
                     <p class="font-bold">Order Summary</p>

@@ -7,9 +7,9 @@
             <p class="text-2xl font-bold text-lightblue font-sour-gummy">Profil Anda</p>
         </div>
     </div>
-    <div class="flex">
-        <div class="left-content w-[30%]">
-            <table class="w-[80%] border-separate border-spacing-0">
+    <div class="flex md:flex-row flex-col gap-4 md:gap-0">
+        <div class="left-content md:w-[30%] w-full">
+            <table class="w-full md:w-[80%] border-separate border-spacing-0">
                 <tbody>
                     <tr>
                         <td>
@@ -35,7 +35,7 @@
             </table>
         </div>
 
-        <div class="right-content w-[70%] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
+        <div class="right-content w-full md:w-[70%] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
             <div id="my-profile-section">
                 <p class="font-semibold text-lightblue">Nama : Muhammad Rifqi</p>
                 <p class="font-semibold text-lightblue">Kelas : XII PPLG 2</p>

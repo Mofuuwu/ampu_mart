@@ -23,6 +23,7 @@ export default {
                 custompurple: '#505398',
                 customgray: '#F1F1F1',
             }
+            
         },
     },
     plugins: [],

@@ -3,8 +3,8 @@
 @include('components.navbar')
 
 
-<section class="px-[10%] bg-green-300 my-20">
-    <form action="" method="post" class="w-[50%] max-w-md mx-auto bg-customgray p-6 rounded-lg shadow-md">
+<section class="px-[5%] md:px-[10%] my-20">
+    <form action="" method="post" class="w-full md:w-[50%] max-w-md mx-auto bg-customgray p-6 rounded-lg shadow-md">
         @csrf
         <h1 class="text-3xl font-bold text-lightblue text-center mb-5">Login</h1>
         <div class="mb-4">
@@ -22,7 +22,7 @@
             @enderror
         </div>
         <button type="submit" class="w-full bg-lightblue text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Login</button>
-        <p class="text-lightblue font-medium text-center mt-2">belum memiliki akun? silahkan <a class="font-bold" href="/register">register</a></p>
+        <p class="text-lightblue font-medium text-center mt-2">belum memiliki akun? silahkan <a class="font-bold underline" href="/register">register</a></p>
     </form>
 </section>
 

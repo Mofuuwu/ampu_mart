@@ -1,4 +1,4 @@
-<ul class="text-darkblue underline">
+<ul class="text-darkblue underline md:text:md text-sm">
     <li><a href="">Peralatan Memasak (24)</a></li>
     <li><a href="">Peralatan Penyimpanan (15)</a></li>
     <li><a href="">Alat Pemotong & Pengupas (8)</a></li>

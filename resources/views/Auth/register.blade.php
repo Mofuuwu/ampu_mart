@@ -2,9 +2,9 @@
 
 @include('components.navbar')
 
-<section class="my-20 px-[10%]">
-    <form action="" method="post" id="registration-form" class="w-[50%] max-w-md mx-auto bg-customgray p-6 rounded-lg shadow-md">
-        <h1 class="text-3xl font-bold font-inter text-lightblue text-center mt-20">Register</h1>
+<section class="my-20 px-[5%] md:px-[10%]">
+    <form action="" method="post" id="registration-form" class="w-full md:w-[50%] max-w-md mx-auto bg-customgray p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold font-inter text-lightblue text-center">Register</h1>
         @csrf
         <!-- Step 1 -->
         <div id="step-1" class="form-step">
@@ -38,7 +38,7 @@
             </div>
 
             <button type="button" id="next-button" class="w-full bg-lightblue text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Next</button>
-            <p class="text-lightblue font-medium text-center mt-2">sudah memiliki akun? silahkan <a class="font-bold" href="/login">login</a></p>
+            <p class="text-lightblue font-medium text-center mt-2">sudah memiliki akun? silahkan <a class="font-bold underline" href="/login">login</a></p>
         </div>
 
         <!-- Step 2 -->
@@ -72,7 +72,7 @@
                 @enderror
             </div>
             <div class="flex justify-between">
-                <button type="button" id="back-button" class="bg-lightblue~ text-white font-bold py-3 px-5 rounded-lg hover:bg-gray-700 transition">Back</button>
+                <button type="button" id="back-button" class="bg-lightblue text-white font-bold py-3 px-5 rounded-lg hover:bg-gray-700 transition">Back</button>
                 <button type="submit" id="submit-button" class="bg-lightblue text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-700 transition">Submit</button>
             </div>
         </div>
