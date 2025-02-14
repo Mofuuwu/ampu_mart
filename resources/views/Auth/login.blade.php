@@ -1,12 +1,17 @@
 @extends('templates.start-html')
 
-@include('components.navbar')
 
-
+@if (session('success'))
+    <div class="w-full flex justify-center items-center my-4">
+        <div class="bg-green-500 px-3 py-1 rounded-md w-fit text-white font-inter font-bold">
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
 <section class="px-[5%] md:px-[10%] my-20">
-    <form action="" method="post" class="w-full md:w-[50%] max-w-md mx-auto bg-customgray p-6 rounded-lg shadow-md">
+    <form action="" method="post" class="w-full md:w-[60%] mx-auto bg-customgray p-6 rounded-lg shadow-md">
         @csrf
-        <h1 class="text-3xl font-bold text-lightblue text-center mb-5">Login</h1>
+        <h1 class="text-3xl font-bold text-lightblue text-center mb-5">Login Ampu Mart</h1>
         <div class="mb-4">
             <label for="email_login" class="block text-lightblue font-bold mb-2">Email</label>
             <input type="email" id="email_login" name="email" value="{{ old('email') }}" class="w-full px-3 py-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lightblue">

@@ -49,6 +49,7 @@
             </div>
             <div id="my-logout-section" class="hidden">
                 <p class="font-semibold text-lightblue">Logout</p>
+                <a class="underline text-darkblue" href="/logout">Klik untuk Logout</a>
             </div>
         </div>
     </div>

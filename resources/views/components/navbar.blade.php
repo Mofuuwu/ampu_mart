@@ -34,7 +34,7 @@
         </ul>
     </div>
     <div id="side-menu" class="fixed top-0 left-0 w-2/3 h-full bg-darkblue p-6 transform -translate-x-full transition-transform ease-in-out duration-300">
-        <div class="flex flex-col text-white font-inter font-bold gap-4">
+        <div class="flex flex-col text-white font-inter font-semibold gap-4">
             <a class="{{ Request::is('/') ? 'text-yellow-400 underline' : '' }} hover:opacity-80" href="/">
                 Home
             </a>

@@ -1,6 +1,14 @@
 @extends('templates.start-html')
 @include('components.navbar')
 
+@if (session('success'))
+    <div class="w-full flex justify-center items-center my-4">
+        <div class="bg-green-500 px-3 py-1 rounded-md w-fit text-white font-inter font-bold">
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
+
 
 <section class="my-5 px-[5%] flex justify-center items-center">
     <div class="min-w-[80%] relative">

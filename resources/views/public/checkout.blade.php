@@ -66,7 +66,7 @@
                         <textarea class="w-full font-semibold text-lightblue outline-none bg-white py-1 px-3 mt-1 rounded-md border-slate-400 border-2 border-opacity-50 mb-10" type="text" placeholder="Tambah Catatan"></textarea>
                     </div>
                     <button class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
-                    <p class="mt-1 text-slate-500 text-sm px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
+                    <p class="mt-1 text-slate-500 text-sm px-2 md:px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
                 </div>
                 <div id="take-section" class="take">
                     <p class="text-darkblue font-bold">Lokasi Pengambilan</p>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <button class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
-                    <p class="mt-1 text-slate-500 text-sm px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
+                    <p class="mt-1 text-slate-500 text-sm px-2 md:px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
                 </div>
 
             </div>
