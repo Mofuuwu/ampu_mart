@@ -13,3 +13,6 @@
 #Belum Selesai
 - membuat halaman profil (ada histori pembelian)
 
+#Besok
+- di detail masih belum ada berapa stok tersisa
+- tambahkan seed dan factory untuk memudahkan pengembangan

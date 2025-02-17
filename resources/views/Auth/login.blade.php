@@ -1,13 +1,8 @@
 @extends('templates.start-html')
 
 
-@if (session('success'))
-    <div class="w-full flex justify-center items-center my-4">
-        <div class="bg-green-500 px-3 py-1 rounded-md w-fit text-white font-inter font-bold">
-            {{ session('success') }}
-        </div>
-    </div>
-@endif
+@include('components.alert-success')
+
 <section class="px-[5%] md:px-[10%] my-20">
     <form action="" method="post" class="w-full md:w-[60%] mx-auto bg-customgray p-6 rounded-lg shadow-md">
         @csrf

@@ -1,15 +1,9 @@
 @extends('templates.start-html')
 @include('components.navbar')
 
-@if (session('success'))
-    <div class="w-full flex justify-center items-center my-4">
-        <div class="bg-green-500 px-3 py-1 rounded-md w-fit text-white font-inter font-bold">
-            {{ session('success') }}
-        </div>
-    </div>
-@endif
+@include('components.alert-success')
 
-
+<button id="updateButton" data-id="{{ Auth::user()->id }}" class="bg-green-500">Update Data</button>
 <section class="my-5 px-[5%] flex justify-center items-center">
     <div class="min-w-[80%] relative">
         <img src="{{asset('images/Frame 1.png')}}" alt="">
@@ -89,52 +83,82 @@
         <p id="tab-terbaru" onclick="switchTab('terbaru')" class="hover:opacity-80 cursor-pointer text-md font-semibold text-lightblue font-sour-gummy">Terbaru</p>
     </div>
     <div id="fav-card-container" class="grid gap-4 mt-4 justify-items-center w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-    @include('components.card')
-</div>
-
-
+        @foreach($best_products as $product)
+        <x-card
+            :id="$product->id"
+            :image_url="$product->image_url"
+            :stock="$product->stock"
+            :name="$product->name"
+            :price="$product->price" />
+        @endforeach
+    </div>
     <div id="newest-card-container" class="grid gap-4 mt-4 justify-items-center w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 hidden">
-            @include('components.card')
-            @include('components.card')
-            @include('components.card')
-            @include('components.card')
+        @foreach($newest_products as $product)
+        <x-card
+            :id="$product->id"
+            :image_url="$product->image_url"
+            :stock="$product->stock"
+            :name="$product->name"
+            :price="$product->price" />
+        @endforeach
     </div>
     <div class="w-full flex justify-center mt-4">
         <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-4 py-2 rounded-[12px] font-sour-gummy">Semua Produk ></a>
     </div>
 </section>
-<script>
-    // Fungsi untuk men-switch antara tab Terlaris dan Terbaru
-    function switchTab(tab) {
-        // Menyembunyikan semua kontainer produk
-        const favContainer = document.getElementById('fav-card-container');
-        const newestContainer = document.getElementById('newest-card-container');
-        const tabTerlaris = document.getElementById('tab-terlaris');
-        const tabTerbaru = document.getElementById('tab-terbaru');
 
-        // Menampilkan kontainer sesuai dengan tab yang dipilih
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#updateButton').click(function() {
+            var id = $(this).data('id');
+            var newValue = 2
+
+            $.ajax({
+                url: '{{ route("update.data") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                    new_value: newValue
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Terjadi kesalahan pada server.');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function switchTab(tab) {
+        var favContainer = $('#fav-card-container');
+        var newestContainer = $('#newest-card-container');
+        var tabTerlaris = $('#tab-terlaris');
+        var tabTerbaru = $('#tab-terbaru');
+
         if (tab === 'terlaris') {
-            favContainer.classList.remove('hidden');
-            newestContainer.classList.add('hidden');
-            tabTerlaris.classList.add('underline');
-            tabTerbaru.classList.remove('underline');
+            favContainer.removeClass('hidden');
+            newestContainer.addClass('hidden');
+            tabTerlaris.addClass('underline');
+            tabTerbaru.removeClass('underline');
         } else if (tab === 'terbaru') {
-            favContainer.classList.add('hidden');
-            newestContainer.classList.remove('hidden');
-            tabTerlaris.classList.remove('underline');
-            tabTerbaru.classList.add('underline');
+            favContainer.addClass('hidden');
+            newestContainer.removeClass('hidden');
+            tabTerlaris.removeClass('underline');
+            tabTerbaru.addClass('underline');
         }
     }
 
-    // Menetapkan tab "Terlaris" aktif secara default
-    window.onload = function() {
+    $(document).ready(function() {
         switchTab('terlaris');
-    }
+    });
 </script>
 @include('components.footer')
 @extends('templates.end-html')

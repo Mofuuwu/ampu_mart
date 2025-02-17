@@ -6,7 +6,7 @@
         <form class="flex md:flex-row justify-between flex-col">
             <p class="text-md md:text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Detail Produk</p>
             <div class="flex items-center gap-2">
-                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
+                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 h-full w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
                 <button type="submit" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Cari</button>
             </div>
         </form>
@@ -20,21 +20,24 @@
                 <p class="text-md md:text-xl font-semibold text-white font-sour-gummy flex items-center">Kategori Produk</p>
             </div>
             <div class="pb-4 px-4">
-                @include('components.tag')
+                <!-- @include('components.tag') -->
+                <ul class="text-darkblue underline md:text:md text-sm">
+                 @foreach ($tags as $tag)
+                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }}</a></li>
+                 @endforeach
+                 </ul>
             </div>
 
         </div>
         <div id="right-content" class="w-full lg:w-[80%]">
             <div class="card flex gap-2 flex-col md:flex-row">
-                <div class="card-left bg-green-500 w-full md:min-w-[300px] min-h-[300px] md:w-[300px] h-[300px] shadow-md rounded-[16px] overflow-hidden flex items-center justify-center">
-                    <img class="border-2 w-full h-auto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqhIOJFqm3iGJAHypsgqsVAhjALIzAs3fMXQ&s" alt="">
+                <div class="card-left bg-green-500 w-full md:min-w-[300px] min-h-[300px] md:w-[300px] h-[300px] shadow-md rounded-[16px] overflow-hidden flex items-center justify-center bg-center bg-cover " style="background-image: url('{{ asset("storage/" . $product->image_url) }}')" >    
                 </div>
                 <div class="card-right">
-                    <p class="font-bold text-xl md:text-3xl text-darkblue">ABC KECAP (TANGGUNG) MANIS BOTOL 275 ML</p>
-                    <p class="font-bold text-lg md:text-xl text-lightblue">Rp. 26.000</p>
-                    
-                    <p class="text-sm text-slate-500">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a </p>
-                    <p class="font-normal text-darkblue underline cursor-pointer">Kategori : Kecap</p>
+                    <p class="font-bold text-xl md:text-3xl text-darkblue">{{ $product->name }}</p>
+                    <p class="font-bold text-lg md:text-xl text-lightblue">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
+                    <p class="text-sm text-slate-500">{{ $product->description }}</p>
+                    <p class="font-normal text-darkblue underline cursor-pointer">Kategori : {{ $product->category->name }}</p>
                     <div class="flex gap-2 mt-2">
                         <input type="number" class="bg-slate-200 rounded-[8px] w-[100px] px-3 py-1 text-center font-bold text-lightblue focus:outline-lightblue">
                         <button class="bg-green-500 hover:bg-green-600 transition-colors text-white font-bold px-5 py-2 rounded-[8px]">Tambah ke Keranjang</button>

@@ -17,3 +17,6 @@ Route::get('/register', [PublicController::class, 'register'])->name('register')
 Route::post('/register', [AuthController::class, 'doRegist']);
 Route::post('/login', [AuthController::class, 'doLogin']);
 Route::get('/logout', [AuthController::class, 'doLogout']);
+
+Route::post('/update-data', [AuthController::class, 'updateData'])->name('update.data');
+Route::get('/jelajahi-produk/{id}', [PublicController::class, 'detail']);

@@ -5,7 +5,7 @@
         <form class="flex md:flex-row justify-between flex-col">
             <p class="text-md md:text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Jelajahi Produk</p>
             <div class="flex items-center gap-2">
-                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
+                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 h-full w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
                 <button type="submit" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Cari</button>
             </div>
         </form>
@@ -20,21 +20,25 @@
                 <p class="text-md md:text-xl font-semibold text-white font-sour-gummy flex items-center">Kategori Produk</p>
             </div>
             <div class="pb-4 px-4">
-                @include('components.tag')
+                <!-- @include('components.tag') -->
+                <ul class="text-darkblue underline md:text:md text-sm">
+                    @foreach ($tags as $tag)
+                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }}</a></li>
+                    @endforeach
+                </ul>
             </div>
 
         </div>
         <div id="right-content" class="md:w-[80%] w-full">
             <div id="card-container" class="grid lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-y-5 w-full sm:justify-items-end justify-items-center">
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
-                @include('components.card-v2')
+                @foreach($products as $product)
+                <x-card-v2
+                    :id="$product->id"
+                    :image_url="$product->image_url"
+                    :stock="$product->stock"
+                    :name="$product->name"
+                    :price="$product->price" />
+                @endforeach
             </div>
         </div>
     </div>

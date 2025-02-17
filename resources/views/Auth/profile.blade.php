@@ -1,4 +1,5 @@
 @extends('templates.start-html')
+
 @include('components.navbar')
 
 <section class="my-5 px-[5%]">
