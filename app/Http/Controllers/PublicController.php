@@ -15,7 +15,7 @@ class PublicController extends Controller
         return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products]);
     }
     public function explore_products() {
-        $tags = Category::all();
+        $tags = Category::withCount('products')->get();
         $products = Product::paginate(20);
         return view('public.jelajahi-produk', ['tags' => $tags, 'products' => $products]);
     }

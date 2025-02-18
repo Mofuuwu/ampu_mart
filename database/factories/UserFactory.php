@@ -41,4 +41,15 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+    public function data1() {
+        return $this->state([
+            'id' => 1,
+            'name' => 'Muhammad Rifqi',
+            'email' => 'muhammadrifqi@gmail.com',
+            'password' => bcrypt('muhammadrifqi'),
+            'phone_number' => '087823928291',
+            'role' => '2',
+            'balance' => 0,
+        ]);
+    }
 }

@@ -57,21 +57,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Logout berhasil!');
     }
-    public function updateData(Request $request)
-    {
-        // Ambil data yang dikirimkan melalui AJAX
-        $id = $request->input('id');
-        $newValue = $request->input('new_value');
-
-        // Update data berdasarkan ID
-        $data = User::find($id);
-        if ($data) {
-            $data->id = $newValue;
-            $data->save();
-
-            return response()->json(['success' => true, 'message' => 'Data updated successfully']);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Data not found']);
-    }
+    
 }

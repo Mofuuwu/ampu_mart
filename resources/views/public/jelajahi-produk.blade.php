@@ -23,7 +23,7 @@
                 <!-- @include('components.tag') -->
                 <ul class="text-darkblue underline md:text:md text-sm">
                     @foreach ($tags as $tag)
-                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }}</a></li>
+                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }} ({{ $tag->products_count }})</a></li>
                     @endforeach
                 </ul>
             </div>

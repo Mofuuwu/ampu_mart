@@ -16,3 +16,4 @@
 #Besok
 - di detail masih belum ada berapa stok tersisa
 - tambahkan seed dan factory untuk memudahkan pengembangan
+- belajar ajax

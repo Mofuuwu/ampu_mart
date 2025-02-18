@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use App\Http\Middleware\LoginRedirect;
@@ -18,5 +19,5 @@ Route::post('/register', [AuthController::class, 'doRegist']);
 Route::post('/login', [AuthController::class, 'doLogin']);
 Route::get('/logout', [AuthController::class, 'doLogout']);
 
-Route::post('/update-data', [AuthController::class, 'updateData'])->name('update.data');
 Route::get('/jelajahi-produk/{id}', [PublicController::class, 'detail']);
+Route::post('/add-to-cart', [ActionController::class, 'add_to_cart'])->name('add_to_cart');
