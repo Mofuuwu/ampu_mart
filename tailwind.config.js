@@ -17,6 +17,8 @@ export default {
             }, 
             colors: {
                 lightblue: '#0295CE',
+                customorange: '#FF6F00',
+                lightyellow: '#FFCC00',
                 midblue: '#006D97',
                 hoverblue: '#147EA7',
                 darkblue: '#004976',

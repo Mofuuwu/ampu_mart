@@ -4,16 +4,14 @@
 - memperbaiki tampilan tagar
 - membuat halaman login
 - membuat halaman registrasi
-
-#Hari Ini
+- tambahkan seed dan factory untuk memudahkan pengembangan
 - membuat halaman menjadi responsif
 - mengecek kembali penamaan dan efisiensi kolom pada tabel
 - membuat relasi orm dan membuat guarded serta penyesuaian timestamps pada model
 
 #Belum Selesai
+- membuat tampilan yang dinamis untuk keranjang belanja
 - membuat halaman profil (ada histori pembelian)
-
-#Besok
 - di detail masih belum ada berapa stok tersisa
-- tambahkan seed dan factory untuk memudahkan pengembangan
 - belajar ajax
+- hapus tanda + pada card agar ketika di klik langsung mengarah ke detail, user hanya bisa menambahkan produk dari detail

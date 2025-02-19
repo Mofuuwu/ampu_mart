@@ -13,7 +13,7 @@
 
     <div class="w-full md:gap-0 gap-5 flex md:flex-row flex-col-reverse justify-between mt-8 my-20">
         <div id="left-content" class="w-full md:w-[20%] shadow-md h-fit rounded-[12px]">
-            <div class="text-white bg-midblue flex items-center px-3 py-1 rounded-t-[12px] mb-2 md:gap-0 gap-0.5">
+            <div class="text-white bg-customorange flex items-center px-3 py-1 rounded-t-[12px] mb-2 md:gap-0 gap-0.5">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="md:size-4 size-3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
                 </svg>

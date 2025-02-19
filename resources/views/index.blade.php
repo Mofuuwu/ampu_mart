@@ -3,7 +3,6 @@
 
 @include('components.alert-success')
 
-<button id="updateButton" data-id="{{ Auth::user()->id }}" class="bg-green-500">Update Data</button>
 <section class="my-5 px-[5%] flex justify-center items-center">
     <div class="min-w-[80%] relative">
         <img src="{{asset('images/Frame 1.png')}}" alt="">
@@ -108,34 +107,6 @@
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#updateButton').click(function() {
-            var id = $(this).data('id');
-            var newValue = 2
-
-            $.ajax({
-                url: '{{ route("update.data") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: id,
-                    new_value: newValue
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                    } else {
-                        alert('Error: ' + response.message);
-                    }
-                },
-                error: function() {
-                    alert('Terjadi kesalahan pada server.');
-                }
-            });
-        });
-    });
-</script>
 <script>
     function switchTab(tab) {
         var favContainer = $('#fav-card-container');
