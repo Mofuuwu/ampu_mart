@@ -8,10 +8,18 @@
 - membuat halaman menjadi responsif
 - mengecek kembali penamaan dan efisiensi kolom pada tabel
 - membuat relasi orm dan membuat guarded serta penyesuaian timestamps pada model
+- di detail masih belum ada berapa stok tersisa
+- hapus tanda + pada card agar ketika di klik langsung mengarah ke detail, user hanya bisa menambahkan produk dari detail
 
 #Belum Selesai
 - membuat tampilan yang dinamis untuk keranjang belanja
 - membuat halaman profil (ada histori pembelian)
-- di detail masih belum ada berapa stok tersisa
 - belajar ajax
-- hapus tanda + pada card agar ketika di klik langsung mengarah ke detail, user hanya bisa menambahkan produk dari detail
+- pada detail, pada navbar kolom jelajahi-produk akan aktif
+- membuat fungsi ketika kategori di klik- fungsi cari produk
+- fungsi simpan dan hapus pada keranjang
+
+- fungsi tambah produk pada keranjang tidak bisa di spam
+ => solusi mungkin nanti tambahkan saja input untuk mengubah nilai
+
+- buat agar total produk di keranjang tidak bisa melebihi jumlah stok

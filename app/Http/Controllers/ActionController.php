@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class ActionController extends Controller
 {
@@ -38,5 +39,59 @@ class ActionController extends Controller
             return response()->json(['success' => true, 'message' => 'Data added to cart successfully']);
         }
     }
-    
+
+    public function cart_add_quantity(Request $request) {
+        Log::info($request->all());
+        $user_id = Auth::id();
+        $product_id = $request->input('product_id');
+        $quantity = $request->input('quantity');
+
+        $cart = Cart::where('product_id', $product_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+        if ($cart) {
+            $cart->quantity = $quantity += 1;
+            $cart->total_price = $cart->quantity * $cart->product->price;
+            $cart->save();
+            return response()->json(['success' => true, 'message' => 'Berhasil Menambahkan Kuantitas Produk']);
+        } else {
+            return response()->json(['gagal' => true, 'message' => 'Data Produk Tidak Ditemukan']);
+        }
+    }
+    public function cart_del_quantity(Request $request) {
+        Log::info($request->all());
+        $user_id = Auth::id();
+        $product_id = $request->input('product_id');
+        $quantity = $request->input('quantity');
+
+        $cart = Cart::where('product_id', $product_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+        if ($cart) {
+            $cart->quantity = $quantity -= 1;
+            $cart->total_price = $cart->quantity * $cart->product->price;
+            $cart->save();
+            return response()->json(['success' => true, 'message' => 'Berhasil Mengurangi Kuantitas Produk']);
+        } else {
+            return response()->json(['gagal' => true, 'message' => 'Data Produk Tidak Ditemukan']);
+        }
+    }
+    public function cart_del_product(Request $request) {
+        Log::info($request->all());
+        $user_id = Auth::id();
+        $product_id = $request->input('product_id');
+
+        $cart = Cart::where('product_id', $product_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+        if ($cart) {
+            $cart->delete();
+            return response()->json(['success' => true, 'message' => 'Berhasil Menghapus Produk']);
+        } else {
+            return response()->json(['gagal' => true, 'message' => 'Data Produk Tidak Ditemukan']);
+        }
+    }
 }

@@ -1,32 +1,36 @@
 html : 
-<button id="updateButton" data-id="{{ Auth::user()->id }}" class="bg-green-500">Update Data</button>
+ <button onclick="addToCart(this)" id="add-to-cart-btn" data-price="{{ $product->price }}" data-product="{{ $product->id }}" data-id="{{ Auth::user()->id }}" class="bg-green-500 h-fit p-2 rounded-[8px] text-white hover:bg-green-600 cursor-pointer">
 
 script : 
-<script>
-    $(document).ready(function() {
-        $('#updateButton').click(function() {
-            var id = $(this).data('id');
-            var newValue = 2
+  function addToCart(element) {
+    var quantity = $('#quantity-input').val();
+    var id = $(element).data('id');  
+    var product = $(element).data('product');  
+    var price = $(element).data('price') * quantity;  
 
-            $.ajax({
-                url: '{{ route("update.data") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: id,
-                    new_value: newValue
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                    } else {
-                        alert('Error: ' + response.message);
-                    }
-                },
-                error: function() {
-                    alert('Terjadi kesalahan pada server.');
-                }
-            });
-        });
+    $.ajax({
+        url: '{{ route("add_to_cart") }}',
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            id: id,
+            product: product,
+            price: price,
+            quantity: quantity,
+        },
+        success: function(response) {
+            if (response.success) {
+                alert(response.message);
+                $('#quantity-input').val('');
+            } else {
+                alert('Error: ' + response.message);  // Menampilkan pesan error
+                $('#quantity-input').val('');
+            }
+        },
+        error: function() {
+            alert('Terjadi kesalahan pada server.');
+            $('#quantity-input').val('');
+        }
     });
-</script> 
+  }
+</script>
