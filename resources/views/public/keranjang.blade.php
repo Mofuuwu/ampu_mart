@@ -1,6 +1,6 @@
 @extends('templates.start-html')
 @include('components.navbar')
-<section class="my-5 px-[5%]">
+<section class="my-5 px-[5%] min-h-screen">
     <div class="w-[100%] m-auto">
         <div class="flex justify-start">
             <p class="text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Keranjang</p>
@@ -17,8 +17,11 @@
                 <div class="underline min-h-[1px] bg-gray-200 w-full">
                 </div>
                 <div class="container-card">
+                    @if ($products_in_cart->isNotEmpty())
                     @foreach ($products_in_cart as $product )
-
+                    @php
+                        $productStock = $product->product->stock;  
+                    @endphp
                     <div class="card w-full flex my-2 justify-between">
                         <div class="left-content flex">
                             <a href="{{ route('detail', ['id' => $product->product->id]) }}" class=" bg-center bg-cover hover:shadow-md md:w-[150px] md:h-[150px] w-[100px] h-[100px] overflow-hidden bg-slate-300 rounded-[16px] relative shadow-sm" style=" background-image: url('{{ asset("storage/" . $product->product->image_url) }}');">
@@ -30,14 +33,25 @@
                                     <p class="text-sm md:text-md font-semibold md:font-bold text-customorange">Rp. {{ number_format($product->product->price, '0', ',', '.') }}</p>
                                 </div>
                                 <div class="mt-2 flex gap-1 md:flex-row">
-                                    <button onclick="addQuantity(this)" data-quantity="{{ $product->quantity }}" data-product_id="{{ $product->product->id }}" data-product_price="{{ $product->product->price }}" class="block text-sm md:text-base font-sour-gummy bg-green-500 hover:bg-green-600 font-semibold text-white px-3 py-1 rounded-[10px]">+</button>
+                                    <button onclick="addQuantity(this)" data-quantity="{{ $product->quantity }}" data-product_id="{{ $product->product->id }}" data-product_price="{{ $product->product->price }}" data-stock="{{ $product->product->stock }}" class="block text-sm md:text-base font-sour-gummy bg-green-500 hover:bg-green-600 font-semibold text-white px-3 py-1 rounded-[10px]">+</button>
                                     <button onclick="delQuantity(this)" data-quantity="{{ $product->quantity }}" data-product_id="{{ $product->product->id }}" data-product_price="{{ $product->product->price }}" class="block font-semibold font-sour-gummy bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-[10px]">-</button=>
                                 </div>
                             </div>
                         </div>
                         <div class="right-content flex-col justify-between py-2">
                             <div>
+                            @if ($product->quantity > $productStock) 
+                                @php
+                                    $product->quantity = $productStock;  
+                                    $product->save();  
+                                @endphp
+                                <div class="flex flex-col items-end">
+                                    <p id="total-quantity" class="quantity-product-display text-darkblue font-semibold text-right md:text-base text-sm">{{ $product->quantity }}</p>
+                                    <p class="text-red-600 font-semibold text-right md:text-base text-xs">Jumlah produk telah disesuaikan karena melebihi stok yang tersedia</p>
+                                </div>
+                            @else
                                 <p id="total-quantity" class="quantity-product-display text-darkblue font-semibold text-right md:text-base text-sm">{{ $product->quantity }}</p>
+                            @endif
                                 <p id="total-price" class="total-price-product-display text-darkblue font-bold text-right md:text-base text-sm">Rp. {{ number_format($product->total_price, '0', ',', '.' )}}</p>
                             </div>
                             <div class="flex justify-end w-full">
@@ -52,6 +66,11 @@
 
                     <div class="min-h-[1px] bg-gray-200 w-full"></div>
                     @endforeach
+                    @else
+                    <div class="card w-full flex my-2 justify-center items-center bg-lightblue text-white font-bold font-sour-gummy py-2">
+                        <p>Tidak Ada Produk Di Keranjang</p>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="w-full md:w-[30%]">
@@ -83,14 +102,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function addQuantity(element) {
-        var quantity = $(element).data('quantity');
+        var quantity = $(element).data('quantity'); 
         var product_id = $(element).data('product_id');
         var product_price = $(element).data('product_price');
+        var stock = $(element).data('stock');
 
         var total_products = $('#total_products').data('total_products');
         var total_prices = $('#total_prices').data('total_prices');
 
-        var new_quantity = quantity + 1;
+        var new_quantity = quantity + 1; 
+        if (new_quantity > stock) {
+            return alert('Jumlah Barang Di Keranjang Tidak Bisa Melebihi Jumlah Stok');
+        }
         var new_total_products = total_products + 1; 
         var new_total_prices = parseFloat(total_prices) + parseFloat(product_price); 
 
@@ -107,13 +130,14 @@
                 if (response.success) {
                     alert(response.message);
 
-                    $(element).data('quantity', new_quantity);  // Update quantity di data-* attribute
+                    $(element).attr('data-quantity', new_quantity);  // Update quantity di data-* attribute
                     $(element).closest('.card').find('.quantity-product-display').text(new_quantity); // Update quantity di card
                     $(element).closest('.card').find('.total-price-product-display').text('Rp. ' + (new_quantity * product_price).toLocaleString('id-ID')); // Update harga produk per item
 
                     // Update total produk dan total harga di halaman
                     $('#total_products').data('total_products', new_total_products).text(new_total_products); // Update total products
                     $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
+                    location.reload();
                 } else {
                     alert('Error: ' + response.message);
                 }
@@ -149,13 +173,13 @@
                 if (response.success) {
                     alert(response.message);
 
-                    $(element).data('quantity', new_quantity);  // Update quantity di data-* attribute
-                    $(element).closest('.card').find('.quantity-product-display').text(new_quantity); // Update quantity di card
+                    $(element).attr('data-quantity', new_quantity);  
+                    $(element).closest('.card').find('.quantity-product-display').text(new_quantity); 
                     $(element).closest('.card').find('.total-price-product-display').text('Rp. ' + (new_quantity * product_price).toLocaleString('id-ID')); // Update harga produk per item
 
-                    // Update total produk dan total harga di halaman
-                    $('#total_products').data('total_products', new_total_products).text(new_total_products); // Update total products
+                    $('#total_products').data('total_products', new_total_products).text(new_total_products); 
                     $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
+                    location.reload();
                 } else {
                     alert('Error: ' + response.message);
                 }
@@ -170,12 +194,8 @@
     var quantity = $(element).data('quantity');
     var product_id = $(element).data('product_id');
     var product_price = $(element).data('product_price');
-
-    // Ambil data total produk dan total harga yang ada di elemen
     var total_products = $('#total_products').data('total_products');
     var total_prices = $('#total_prices').data('total_prices');
-
-    // Menghitung jumlah total produk dan total harga setelah penghapusan
     var new_total_products = total_products - quantity;
     var new_total_prices = total_prices - (product_price * quantity);
 
@@ -190,13 +210,10 @@
         success: function(response) {
             if (response.success) {
                 alert(response.message);
-
-                // Hapus produk dari DOM
-                $(element).closest('.card').remove();  // Menghapus elemen produk yang terhapus
-
-                // Update total produk dan total harga di halaman
-                $('#total_products').data('total_products', new_total_products).text(new_total_products); // Update total products
+                $(element).closest('.card').remove();  
+                $('#total_products').data('total_products', new_total_products).text(new_total_products); 
                 $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
+                location.reload();
             } else {
                 alert('Error: ' + response.message);
             }

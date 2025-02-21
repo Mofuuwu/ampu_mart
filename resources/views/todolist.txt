@@ -10,16 +10,15 @@
 - membuat relasi orm dan membuat guarded serta penyesuaian timestamps pada model
 - di detail masih belum ada berapa stok tersisa
 - hapus tanda + pada card agar ketika di klik langsung mengarah ke detail, user hanya bisa menambahkan produk dari detail
+- membuat tampilan yang dinamis untuk keranjang belanja
+- fungsi tambah, kurang, dan hapus pada keranjang
+- fungsi tambah produk pada keranjang tidak bisa di spam
 
 #Belum Selesai
-- membuat tampilan yang dinamis untuk keranjang belanja
 - membuat halaman profil (ada histori pembelian)
 - belajar ajax
-- pada detail, pada navbar kolom jelajahi-produk akan aktif
-- membuat fungsi ketika kategori di klik- fungsi cari produk
-- fungsi simpan dan hapus pada keranjang
-
-- fungsi tambah produk pada keranjang tidak bisa di spam
- => solusi mungkin nanti tambahkan saja input untuk mengubah nilai
+- membuat fungsi ketika kategori di klik
+- fungsi cari produk
 
 - buat agar total produk di keranjang tidak bisa melebihi jumlah stok
+- fungis tambah dan kurang produk masih error, ketika menambah kemudian mengurangi produk, produk akan berkurang 2x nya

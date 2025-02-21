@@ -51,7 +51,7 @@ class ActionController extends Controller
         ->first();
 
         if ($cart) {
-            $cart->quantity = $quantity += 1;
+            $cart->quantity = $quantity;
             $cart->total_price = $cart->quantity * $cart->product->price;
             $cart->save();
             return response()->json(['success' => true, 'message' => 'Berhasil Menambahkan Kuantitas Produk']);
@@ -70,7 +70,7 @@ class ActionController extends Controller
         ->first();
 
         if ($cart) {
-            $cart->quantity = $quantity -= 1;
+            $cart->quantity = $quantity;
             $cart->total_price = $cart->quantity * $cart->product->price;
             $cart->save();
             return response()->json(['success' => true, 'message' => 'Berhasil Mengurangi Kuantitas Produk']);
