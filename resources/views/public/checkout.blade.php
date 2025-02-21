@@ -100,14 +100,22 @@
                     </svg>
                 </div>
                 <div id="card-container" class="card-container max-h-0 overflow-hidden transition-all duration-500">
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
-                    @include('components.checkout-card')
+                    @foreach ($products_in_cart as $product)
+                    <div class="card flex justify-between my-1">
+                        <div class="flex gap-2">
+                            <div class=" rounded-[8px] relative min-w-[100px] min-h-[100px] overflow-hidden bg-cover bg-center" style=" background-image: url('{{ asset("storage/" . $product->product->image_url) }}');">
+                                <p class="absolute right-0 top-0 bg-lightblue rounded-bl-[8px] px-2 py-0.5 text-white font-semibold text-sm">{{ $product->quantity }}</p>
+                            </div>
+                            <div>
+                                <p class="text-darkblue font-semibold text-sm">{{ $product->product->name }}</p>
+                                <p class="text-lightblue font-semibold text-sm">Rp. {{ number_format($product->product->price, '0', ',', '.' )}}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-darkblue font-semibold text-sm">Rp. {{ number_format($product->total_price, '0', ',', '.' )}}</p>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

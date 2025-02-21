@@ -13,12 +13,12 @@
 - membuat tampilan yang dinamis untuk keranjang belanja
 - fungsi tambah, kurang, dan hapus pada keranjang
 - fungsi tambah produk pada keranjang tidak bisa di spam
+- buat agar total produk di keranjang tidak bisa melebihi jumlah stok
+- fungis tambah dan kurang produk masih error, ketika menambah kemudian mengurangi produk, produk akan berkurang 2x nya
+    => solusi : setelah melakukan aksi akan merefresh halaman
 
 #Belum Selesai
 - membuat halaman profil (ada histori pembelian)
 - belajar ajax
 - membuat fungsi ketika kategori di klik
 - fungsi cari produk
-
-- buat agar total produk di keranjang tidak bisa melebihi jumlah stok
-- fungis tambah dan kurang produk masih error, ketika menambah kemudian mengurangi produk, produk akan berkurang 2x nya

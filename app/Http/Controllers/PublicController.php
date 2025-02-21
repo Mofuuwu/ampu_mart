@@ -32,7 +32,17 @@ class PublicController extends Controller
     }
     public function checkout()
     {
-        return view('public.checkout');
+        $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
+        foreach ($products_in_cart as $product) {
+            $productStock = $product->product->stock;  
+            if ($product->quantity > $productStock) {
+                $product->quantity = $productStock;  
+                $product->save();
+            }
+        }
+        return view('public.checkout', [
+            'products_in_cart' => $products_in_cart
+        ]);
     }
     public function detail($id) {
         $product = Product::findOrFail($id);
