@@ -17,12 +17,12 @@ class PublicController extends Controller
         $newest_products = Product::orderBy('created_at', 'desc')->limit(6)->get();
         return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products]);
     }
-    public function explore_products()
-    {
-        $tags = Category::withCount('products')->get();
-        $products = Product::paginate(20);
-        return view('public.jelajahi-produk', ['tags' => $tags, 'products' => $products]);
-    }
+    // public function explore_products()
+    // {
+    //     $tags = Category::withCount('products')->get();
+    //     $products = Product::paginate(20);
+    //     return view('public.jelajahi-produk', ['tags' => $tags, 'products' => $products]);
+    // }
     public function cart()
     {
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();

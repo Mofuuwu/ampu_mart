@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button id="btn-riwayat" class="text-lightblue px-5 font-bold border-b-2 w-full text-start py-2" onclick="showSection('my-history-section', this)">Riwayat Pesanan (Tabel)</button>
+                            <button id="btn-riwayat" class="text-lightblue px-5 font-bold border-b-2 w-full text-start py-2" onclick="showSection('my-history-section', this)">Riwayat Pesanan</button>
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
             </table>
         </div>
 
-        <div class="w-[70%]">
+        <div class="md:w-[70%] w-full">
             <section id="my-profile-section" class="w-full flex flex-col gap-2">
                 <div class="flex justify-between gap-2">
                     <div class="w-[25%] bg-lightblue border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] text-white flex items-center justify-center">
@@ -82,7 +82,7 @@
                             <p class="text-slate-500 text-sm">02819179272</p>
                         </div>
                         <div class="w-[10%] flex justify-end items-center">
-                            <p class="text-lightblue underline font-semibold cursor-pointer">Edit</p>
+                            <a href="#" class="text-lightblue underline font-semibold cursor-pointer text-sm">Edit</a>
                         </div>
                     </div>
                     <div class="w-full bg-slate-200 rounded-[8px] p-4 flex justify-between border-slate-400 border-2 border-opacity-50 mb-2">
@@ -105,7 +105,7 @@
                 </ul>
                 <div class="min-w-full min-h-[2px] bg-lightblue">
                 </div>
-                <div class="card-container w-full gap-2">
+                <a href="#" class="card-container w-full gap-2 cursor-pointer">
                     <ul class="bg-lightblue flex justify-between my-1 px-2 py-1">
                         <div class="flex items-center">
                             <div class="flex justify-center items-center p-2 text-white">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </ul>
-                </div>
+                </a>
             </div>
             <div id="my-logout-section" class="hidden right-content w-full md:w-[full] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
                 <p class="font-semibold text-lightblue">Logout</p>

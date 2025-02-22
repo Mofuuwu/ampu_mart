@@ -2,13 +2,16 @@
 @include('components.navbar')
 <section class="my-5 px-[5%]">
     <div class="w-[100%] m-auto">
-        <form class="flex md:flex-row justify-between flex-col">
+        <div class="flex md:flex-row justify-between flex-col">
             <p class="text-md md:text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Jelajahi Produk</p>
-            <div class="flex items-center gap-2">
-                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 h-full w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
+            <form action="{{ route('search.product') }}" method="get" class="flex items-center gap-2">
+                <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Clear</a>
+                <input name="keyword" placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 h-full w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy" value="{{ request()->get('keyword') }}">
+                <input type="hidden" name="category" value="{{ request()->get('category') }}"> <!-- Menambahkan kategori di form -->
                 <button type="submit" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Cari</button>
-            </div>
-        </form>
+            </form>
+
+        </div>
     </div>
 
     <div class="w-full md:gap-0 gap-5 flex md:flex-row flex-col-reverse justify-between mt-8 my-20">
@@ -23,9 +26,10 @@
                 <!-- @include('components.tag') -->
                 <ul class="text-darkblue underline md:text:md text-sm">
                     @foreach ($tags as $tag)
-                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }} ({{ $tag->products_count }})</a></li>
+                    <li><a href="?category={{ $tag->name }}&keyword={{ request()->get('keyword') }}">{{ $tag->name }} ({{ $tag->products_count }})</a></li>
                     @endforeach
                 </ul>
+
             </div>
 
         </div>
@@ -44,6 +48,8 @@
     </div>
 
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @include('components.footer')
 @extends('templates.end-html')
