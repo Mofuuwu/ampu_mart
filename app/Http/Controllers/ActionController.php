@@ -106,6 +106,7 @@ class ActionController extends Controller
         $keyword = $request->get('keyword');
         $category = $request->get('category');
         $query = Product::query();
+        $is_null = false;
 
         if ($keyword) {
             $query->where('name', 'like', "%{$keyword}%");
@@ -118,9 +119,10 @@ class ActionController extends Controller
         }
 
         $products = $query->paginate(10);
+        
         return view('public.jelajahi-produk', [
             'products' => $products,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 }

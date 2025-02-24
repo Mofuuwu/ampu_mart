@@ -71,8 +71,10 @@
     </div>
 </section>
 
-<section class="md:my-36 my-10 px-[5%] w-full bg-lightblue">
-    Anda Memiliki 618 Barang Yang Belum DI Checkout
+<section class="md:my-36 my-10 px-[5%] w-full bg-lightblue py-10 flex items-center justify-center flex-col font-sour-gummy">
+    <p class="md:text-2xl text-lg text-white font-bold text-center ">Sebanyak {{ $products_in_cart->count() }} Jenis Barang Ke Keranjang Anda</p>
+    <p class="md:text-lg text-base text-white font-semibold text-center">Dengan Jumlah Mencapai {{ $products_in_cart->sum('quantity') }} Produk</p>
+    <a href="/keranjang" class="font-bold bg-lightyellow hover:bg-yellow-500 text-white px-3 py-1 rounded-[8px] mt-1">Cek Keranjang</a>
 </section>
 
 <section class="md:my-36 my-10 px-[5%] w-full">

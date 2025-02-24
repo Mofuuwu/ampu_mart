@@ -33,6 +33,7 @@
             </div>
 
         </div>
+        @if ($products->isNotEmpty())
         <div id="right-content" class="md:w-[80%] w-full">
             <div id="card-container" class="grid lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-y-5 w-full sm:justify-items-end justify-items-center">
                 @foreach($products as $product)
@@ -45,6 +46,11 @@
                 @endforeach
             </div>
         </div>
+        @else
+        <div class="w-full flex items-center justify-center md:min-h-0 min-h-[50vh]">
+            <p class="text-slate-400 font-semibold text-2xl text-center">Tidak Ada Produk Yang Ditemukan</p>
+        </div>
+        @endif
     </div>
 
 </section>

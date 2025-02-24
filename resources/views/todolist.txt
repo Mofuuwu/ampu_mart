@@ -16,9 +16,14 @@
 - buat agar total produk di keranjang tidak bisa melebihi jumlah stok
 - fungis tambah dan kurang produk masih error, ketika menambah kemudian mengurangi produk, produk akan berkurang 2x nya
     => solusi : setelah melakukan aksi akan merefresh halaman
-
-#Belum Selesai
-- membuat halaman profil (ada histori pembelian)
-- belajar ajax
 - membuat fungsi ketika kategori di klik
 - fungsi cari produk
+- membuat halaman profil 
+
+#Belum Selesai
+- belajar ajax
+- menambahkan tampilan pada index yg belum Selesai
+- menambahkan fungsi edit alamat pada profil
+- menambahkan fungsi detail transaksi pada profil
+- membuat halaman profil menjadi dinamis
+- menyelesaikan sistem transaksi dan logika penambahakn data ke database

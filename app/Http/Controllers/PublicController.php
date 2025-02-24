@@ -14,8 +14,9 @@ class PublicController extends Controller
     public function index()
     {
         $best_products = Product::limit(6)->get();
+        $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         $newest_products = Product::orderBy('created_at', 'desc')->limit(6)->get();
-        return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products]);
+        return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products, 'products_in_cart' => $products_in_cart]);
     }
     // public function explore_products()
     // {
