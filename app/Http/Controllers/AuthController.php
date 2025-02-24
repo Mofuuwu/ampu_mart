@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Prompts\error;
+
 class AuthController extends Controller
 {
     public function doRegist(Request $request) {
@@ -57,5 +59,19 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Logout berhasil!');
     }
-    
+    public function change_password(Request $request) {
+        $validatedData = $request->validate([
+            'password'=> 'required|string|min:8|confirmed'
+        ], [
+            'password.min' => 'Password harus memiliki minimal 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+        ]);
+
+        $password = $validatedData['password'];
+        $user = User::findOrFail(Auth::id());
+        $user->password = bcrypt($password);
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'password berhasil diubah');
+    }
 }

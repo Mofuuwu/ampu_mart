@@ -1,6 +1,7 @@
 @extends('templates.start-html')
-
 @include('components.navbar')
+@include('components.alert-success')
+@include('components.alert-error')
 
 <section class="my-5 px-[5%]">
     <div class="w-[100%] m-auto">
@@ -45,14 +46,15 @@
                         </svg>
                     </div>
                     <div class="right-content w-[75%] md:w-[full] bg-lightblue border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
-                        <p class="font-semibold text-white">Nama : Muhammad Rifqi</p>
-                        <p class="font-semibold text-white">Kelas : XII PPLG 2</p>
+                        <p class="font-semibold text-white">Halooo,</p>
+                        <p class="font-semibold text-white">{{ Auth::user()->name }}</p>
                     </div>
                 </div>
                 <div class="right-content w-full md:w-[full] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
                     <p class="font-semibold text-lightblue">Saldo Anda : Rp. {{ Auth::user()->balance }}</p>
                 </div>
-                <form class="w-full bg-lightblue border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] text-white">
+                <form action="{{ route('change.password') }}" method="post" class="w-full bg-lightblue border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] text-white">
+                    @csrf
                     <p class="font-semibold text-white">Data Akun Anda</p>
                     <div class="flex flex-col my-2">
                         <p class="font-semibold text-lightyellow">Email :</p>
@@ -60,11 +62,11 @@
                     </div>
                     <div class="flex flex-col my-2">
                         <p class="font-semibold text-lightyellow">Password :</p>
-                        <input type="password" name="password" class="w-full bg-opacity-30 bg-slate-200 outline-none text-white px-3 py-1 font-semibold rounded-[4px] placeholder:text-gray-300 " placeholder="Masukkan Password Baru">
+                        <input required type="password" name="password" class="w-full bg-opacity-30 bg-slate-200 outline-none text-white px-3 py-1 font-semibold rounded-[4px] placeholder:text-gray-300 " placeholder="Masukkan Password Baru">
                     </div>
                     <div class="flex flex-col my-2">
                         <p class="font-semibold text-lightyellow">Konfirmasi Password :</p>
-                        <input type="password" name="password" class="w-full bg-opacity-30 bg-slate-200 outline-none text-white px-3 py-1 font-semibold rounded-[4px] placeholder:text-gray-300" placeholder="Komfirmasi Password Baru">
+                        <input required type="password" name="password_confirmation" class="w-full bg-opacity-30 bg-slate-200 outline-none text-white px-3 py-1 font-semibold rounded-[4px] placeholder:text-gray-300" placeholder="Komfirmasi Password Baru">
                     </div>
                     <button type="submit" class="bg-lightyellow hover:bg-yellow-500 px-5 py-2 text-white w-full my-2 font-bold rounded-[4px]">Ubah Data</button>
                 </form>
