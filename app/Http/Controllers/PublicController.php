@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
@@ -77,7 +78,8 @@ class PublicController extends Controller
     //PROFILE
     public function profile()
     {
-        return view('auth.profile');
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        return view('auth.profile', ['addresses' => $addresses]);
     }
     public function login()
     {

@@ -21,10 +21,12 @@
 - membuat halaman profil 
 - menambahkan tampilan pada index yg belum Selesai
 - menambahkan logika saat mencari barang dan barangnya tidak ketemu
+- menambahkan fungsi edit alamat pada profil
+- membuat halaman profil menjadi dinamis
 
 #Belum Selesai
 - belajar ajax
-- menambahkan fungsi edit alamat pada profil
 - menambahkan fungsi detail transaksi pada profil
-- membuat halaman profil menjadi dinamis
+- halaman riwayat transaksi pada profil
+- jika keranjang 0 maka tidak bisa checkout
 - menyelesaikan sistem transaksi dan logika penambahakn data ke database

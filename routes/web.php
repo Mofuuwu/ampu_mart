@@ -25,4 +25,6 @@ Route::post('/add-to-cart', [ActionController::class, 'add_to_cart'])->name('add
 Route::post('/cart/add-quantity', [ActionController::class, 'cart_add_quantity'])->name('cart.add_quantity')->middleware('auth');
 Route::post('/cart/del-quantity', [ActionController::class, 'cart_del_quantity'])->name('cart.del_quantity')->middleware('auth');
 Route::post('/cart/del-product', [ActionController::class, 'cart_del_product'])->name('cart.del_product')->middleware('auth');
-ROute::post('/profile/change_password', [AuthController::class, 'change_password'])->name('change.password')->middleware('auth');
+Route::post('/profile/change_password', [AuthController::class, 'change_password'])->name('change.password')->middleware('auth');
+Route::post('/profile/add_address', [AuthController::class, 'add_address'])->name('add.address')->middleware('auth');
+Route::get('/profile/del_address/{id}', [AuthController::class, 'del_address'])->name('del.address')->middleware('auth');

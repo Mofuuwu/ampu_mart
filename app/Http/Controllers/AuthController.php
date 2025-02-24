@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,8 @@ use function Laravel\Prompts\error;
 
 class AuthController extends Controller
 {
-    public function doRegist(Request $request) {
+    public function doRegist(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -59,9 +61,10 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Logout berhasil!');
     }
-    public function change_password(Request $request) {
+    public function change_password(Request $request)
+    {
         $validatedData = $request->validate([
-            'password'=> 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed'
         ], [
             'password.min' => 'Password harus memiliki minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
@@ -73,5 +76,21 @@ class AuthController extends Controller
         $user->save();
 
         return redirect()->route('profile')->with('success', 'password berhasil diubah');
+    }
+    public function add_address(Request $request)
+    {
+        $address = Address::create([
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect()->route('profile')->with('success', 'Berhasil Menambahkan Alamat Baru');
+    }
+    public function del_address($id)
+    {
+        $address = Address::findOrFail($id);
+        $address->delete();
+        return redirect()->route('profile')->with('success', 'Berhasil Menghapus Alamat Lama');
     }
 }

@@ -74,29 +74,38 @@
             <div id="my-address-section" class="hidden">
                 <div class="flex justify-between items-center mb-2">
                     <p class="font-semibold text-lightblue">Alamat Saya</p>
-                    <button class="text-white font-semibold bg-green-500 hover:bg-green-600 rounded-[4px] px-3 py-1">Tambah Alamat</button>
+                    <button id="show-address-modal" onclick="showAddAddress()" class="text-white font-semibold bg-green-500 hover:bg-green-600 rounded-[4px] px-3 py-1">Tambah Alamat</button>
+                    <button id="close-address-modal" onclick="closeAddAddress()" class="hidden text-white font-semibold bg-red-500 hover:bg-red-600 rounded-[4px] px-3 py-1">Tutup</button>
                 </div>
-                <div>
+                <div id="address-modal-1">
+                    @if ($addresses->isNotEmpty())
+                    @foreach ($addresses as $address )
                     <div class="w-full bg-slate-200 rounded-[8px] p-4 flex justify-between border-slate-400 border-2 border-opacity-50 mb-2">
                         <div class="w-[90%] flex flex-col flex-wrap">
-                            <p class="text-darkblue font-semibold text-sm">Muhammad Rifqi</p>
-                            <p class="text-slate-500 text-sm">Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia</p>
-                            <p class="text-slate-500 text-sm">02819179272</p>
+                            <p class="text-darkblue font-semibold text-sm">{{ Auth::user()->name }}</p>
+                            <p class="text-slate-500 text-sm">{{ $address->address }}</p>
+                            <p class="text-slate-500 text-sm">{{ $address->phone_number }}</p>
                         </div>
                         <div class="w-[10%] flex justify-end items-center">
-                            <a href="#" class="text-lightblue underline font-semibold cursor-pointer text-sm">Edit</a>
+                            <a href="/profile/del_address/{{ $address->id }}" class="text-red-500 underline font-semibold cursor-pointer text-sm">Hapus</a>
                         </div>
                     </div>
-                    <div class="w-full bg-slate-200 rounded-[8px] p-4 flex justify-between border-slate-400 border-2 border-opacity-50 mb-2">
-                        <div class="w-[90%] flex flex-col flex-wrap">
-                            <p class="text-darkblue font-semibold text-sm">Muhammad Rifqi</p>
-                            <p class="text-slate-500 text-sm">Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia</p>
-                            <p class="text-slate-500 text-sm">02819179272</p>
-                        </div>
-                        <div class="w-[10%] flex justify-end items-center">
-                            <p class="text-lightblue underline font-semibold cursor-pointer">Edit</p>
-                        </div>
+                    @endforeach
+                    @else
+                    <div class="w-full bg-slate-200 rounded-[8px] p-4 flex justify-center items-center border-slate-400 border-2 border-opacity-50 mb-2">
+                        <p class="text-lightblue font-semibold text-sm">Belum Menambahkan Alamat</p>
                     </div>
+                    @endif
+                </div>
+                <div id="address-modal-2" class="hidden">
+                    <form action="{{ route('add.address') }}" method="post" class="w-full bg-slate-200 rounded-[8px] p-4 flex flex-col border-slate-400 border-2 border-opacity-50 mb-2 space-y-2">
+                        @csrf
+                        <label for="" class="font-semibold text-lightblue">Alamat :</label>
+                        <input required type="text" name="address" class="w-full h-fit text-wrap rounded-[8px] px-3 py-2 focus:outline-lightblue">
+                        <label for="" class="font-semibold text-lightblue">Nomor Telepon :</label>
+                        <input required type="number" name="phone_number" class="w-full h-fit text-wrap rounded-[8px] px-3 py-2 focus:outline-lightblue">
+                        <button type="submit" class="bg-lightblue hover:bg-blue-500 px-5 py-2 text-white w-full my-2 font-bold rounded-[4px]">Tambah Alamat</button>
+                    </form>
                 </div>
             </div>
             <div id="my-history-section" class="hidden">
@@ -137,35 +146,39 @@
     </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function showSection(sectionId, button) {
-        const sections = document.querySelectorAll('[id^="my-"]');
-        sections.forEach(function(section) {
-            section.classList.add('hidden');
-        });
-
-        const sectionToShow = document.getElementById(sectionId);
-        if (sectionToShow) {
-            sectionToShow.classList.remove('hidden');
-        }
-        const buttons = document.querySelectorAll('#navbar button');
-        buttons.forEach(function(btn) {
-            btn.classList.remove('bg-lightblue', 'text-white');
-            btn.classList.add('text-lightblue');
-        });
-
-        button.classList.add('bg-lightblue', 'text-white');
+        $('[id^="my-"]').addClass('hidden');
+        $('#' + sectionId).removeClass('hidden');
+        $('#navbar button').removeClass('bg-lightblue text-white').addClass('text-lightblue');
+        $(button).addClass('bg-lightblue text-white');
     }
 
-    window.onload = function() {
-        const firstButton = document.getElementById('btn-akun');
-        const firstSection = document.getElementById('my-profile-section');
+    $(document).ready(function() {
+        const firstButton = $('#btn-akun');
+        const firstSection = $('#my-profile-section');
 
-        if (firstButton && firstSection) {
-            firstSection.classList.remove('hidden');
-            firstButton.classList.add('bg-lightblue', 'text-white');
+        if (firstButton.length && firstSection.length) {
+            firstSection.removeClass('hidden');
+            firstButton.addClass('bg-lightblue text-white');
         }
+    });
+
+    function showAddAddress() {
+        $('#address-modal-1').hide();
+        $('#address-modal-2').show();
+        $('#show-address-modal').hide();
+        $('#close-address-modal').removeClass('hidden'); 
+    }
+
+    function closeAddAddress() {
+        $('#address-modal-1').show();
+        $('#address-modal-2').hide();
+        $('#show-address-modal').show();
+        $('#close-address-modal').addClass('hidden'); 
     }
 </script>
+
 
 @extends('templates.end-html')
