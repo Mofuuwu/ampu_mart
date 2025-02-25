@@ -26,6 +26,8 @@
 - jika keranjang 0 maka tidak bisa checkout
 
 #Belum Selesai
+- menambahkan policy pada checkout, karena user masih tetap bisa mengakses halaman menggunakan url
+- menambahkan focus : text-lightblue pada checkout
 - belajar ajax
 - halaman riwayat transaksi pada profil
 - menambahkan fungsi detail transaksi pada profil

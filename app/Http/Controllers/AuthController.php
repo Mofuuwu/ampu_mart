@@ -80,6 +80,7 @@ class AuthController extends Controller
     public function add_address(Request $request)
     {
         $address = Address::create([
+            'name' => $request->name,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'user_id' => Auth::user()->id

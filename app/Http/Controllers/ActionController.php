@@ -125,4 +125,7 @@ class ActionController extends Controller
             'tags' => $tags,
         ]);
     }
+    public function do_checkout (Request $request) {
+        dd($request);
+    }
 }

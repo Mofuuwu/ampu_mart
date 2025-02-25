@@ -82,7 +82,7 @@
                     @foreach ($addresses as $address )
                     <div class="w-full bg-slate-200 rounded-[8px] p-4 flex justify-between border-slate-400 border-2 border-opacity-50 mb-2">
                         <div class="w-[90%] flex flex-col flex-wrap">
-                            <p class="text-darkblue font-semibold text-sm">{{ Auth::user()->name }}</p>
+                            <p class="text-darkblue font-semibold text-sm">{{ $address->name }}</p>
                             <p class="text-slate-500 text-sm">{{ $address->address }}</p>
                             <p class="text-slate-500 text-sm">{{ $address->phone_number }}</p>
                         </div>
@@ -100,6 +100,8 @@
                 <div id="address-modal-2" class="hidden">
                     <form action="{{ route('add.address') }}" method="post" class="w-full bg-slate-200 rounded-[8px] p-4 flex flex-col border-slate-400 border-2 border-opacity-50 mb-2 space-y-2">
                         @csrf
+                        <label for="" class="font-semibold text-lightblue">Nama Alias : <span class="opacity-70">(Contoh : Rumah)</span></label>
+                        <input required type="text" name="name" class="w-full h-fit text-wrap rounded-[8px] px-3 py-2 focus:outline-lightblue">
                         <label for="" class="font-semibold text-lightblue">Alamat :</label>
                         <input required type="text" name="address" class="w-full h-fit text-wrap rounded-[8px] px-3 py-2 focus:outline-lightblue">
                         <label for="" class="font-semibold text-lightblue">Nomor Telepon :</label>
