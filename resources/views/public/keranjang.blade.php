@@ -20,7 +20,7 @@
                     @if ($products_in_cart->isNotEmpty())
                     @foreach ($products_in_cart as $product )
                     @php
-                        $productStock = $product->product->stock;  
+                    $productStock = $product->product->stock;
                     @endphp
                     <div class="card w-full flex my-2 justify-between">
                         <div class="left-content flex">
@@ -40,18 +40,18 @@
                         </div>
                         <div class="right-content flex-col justify-between py-2">
                             <div>
-                            @if ($product->quantity > $productStock) 
+                                @if ($product->quantity > $productStock)
                                 @php
-                                    $product->quantity = $productStock;  
-                                    $product->save();  
+                                $product->quantity = $productStock;
+                                $product->save();
                                 @endphp
                                 <div class="flex flex-col items-end">
                                     <p id="total-quantity" class="quantity-product-display text-darkblue font-semibold text-right md:text-base text-sm">{{ $product->quantity }}</p>
                                     <p class="text-red-600 font-semibold text-right md:text-base text-xs">Jumlah produk telah disesuaikan karena melebihi stok yang tersedia</p>
                                 </div>
-                            @else
+                                @else
                                 <p id="total-quantity" class="quantity-product-display text-darkblue font-semibold text-right md:text-base text-sm">{{ $product->quantity }}</p>
-                            @endif
+                                @endif
                                 <p id="total-price" class="total-price-product-display text-darkblue font-bold text-right md:text-base text-sm">Rp. {{ number_format($product->total_price, '0', ',', '.' )}}</p>
                             </div>
                             <div class="flex justify-end w-full">
@@ -67,7 +67,7 @@
                     <div class="min-h-[1px] bg-gray-200 w-full"></div>
                     @endforeach
                     @else
-                    <div class="card w-full flex my-2 justify-center items-center bg-lightblue text-white font-bold font-sour-gummy py-2">
+                    <div class="card w-full flex my-2 justify-center items-center bg-gray-400 bg-opacity-50 text-white font-bold font-sour-gummy py-2">
                         <p>Tidak Ada Produk Di Keranjang</p>
                     </div>
                     @endif
@@ -88,9 +88,9 @@
                         <p id="total_prices" data-total_prices="{{ $products_in_cart->sum('total_price') }}" class="flex justify-between text-darkblue font-bold text-2xl">{{ 'Rp ' . number_format($products_in_cart->sum('total_price'), 0, ',', '.') }}</p>
                     </div>
                 </div>
-                <a href="/checkout" class="bg-lightblue h-fit px-3 py-2 mt-2 cursor-pointer flex justify-center items-center text-white hover:bg-hoverblue font-semibold font-sour-gummy">
+                <button id="btn_checkout" onclick="cart_check()" data-products_in_cart="{{ $products_in_cart }}" href="/checkout" class="bg-lightblue w-full h-fit px-3 py-2 mt-2 cursor-pointer flex justify-center items-center text-white hover:bg-hoverblue font-semibold font-sour-gummy">
                     Checkout Sekarang
-                </a>
+                </button>
             </div>
         </div>
         <div>
@@ -101,8 +101,16 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function cart_check() {
+        var products_in_cart = $('#btn_checkout').data('products_in_cart');
+        if (!products_in_cart || products_in_cart.length === 0) {
+            return alert('Tidak ada produk di keranjang');
+        }
+        location.href = '/checkout';
+    }
+
     function addQuantity(element) {
-        var quantity = $(element).data('quantity'); 
+        var quantity = $(element).data('quantity');
         var product_id = $(element).data('product_id');
         var product_price = $(element).data('product_price');
         var stock = $(element).data('stock');
@@ -110,19 +118,19 @@
         var total_products = $('#total_products').data('total_products');
         var total_prices = $('#total_prices').data('total_prices');
 
-        var new_quantity = quantity + 1; 
+        var new_quantity = quantity + 1;
         if (new_quantity > stock) {
             return alert('Jumlah Barang Di Keranjang Tidak Bisa Melebihi Jumlah Stok');
         }
-        var new_total_products = total_products + 1; 
-        var new_total_prices = parseFloat(total_prices) + parseFloat(product_price); 
+        var new_total_products = total_products + 1;
+        var new_total_prices = parseFloat(total_prices) + parseFloat(product_price);
 
         $.ajax({
             url: '{{ route("cart.add_quantity") }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
-                quantity: new_quantity, 
+                quantity: new_quantity,
                 product_id: product_id,
                 product_price: product_price,
             },
@@ -130,7 +138,7 @@
                 if (response.success) {
                     alert(response.message);
 
-                    $(element).attr('data-quantity', new_quantity);  // Update quantity di data-* attribute
+                    $(element).attr('data-quantity', new_quantity); // Update quantity di data-* attribute
                     $(element).closest('.card').find('.quantity-product-display').text(new_quantity); // Update quantity di card
                     $(element).closest('.card').find('.total-price-product-display').text('Rp. ' + (new_quantity * product_price).toLocaleString('id-ID')); // Update harga produk per item
 
@@ -157,15 +165,15 @@
         var total_prices = $('#total_prices').data('total_prices');
 
         var new_quantity = quantity - 1;
-        var new_total_products = total_products - 1; 
-        var new_total_prices = parseFloat(total_prices) - parseFloat(product_price); 
+        var new_total_products = total_products - 1;
+        var new_total_prices = parseFloat(total_prices) - parseFloat(product_price);
 
         $.ajax({
             url: '{{ route("cart.del_quantity") }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
-                quantity: new_quantity, 
+                quantity: new_quantity,
                 product_id: product_id,
                 product_price: product_price,
             },
@@ -173,11 +181,11 @@
                 if (response.success) {
                     alert(response.message);
 
-                    $(element).attr('data-quantity', new_quantity);  
-                    $(element).closest('.card').find('.quantity-product-display').text(new_quantity); 
+                    $(element).attr('data-quantity', new_quantity);
+                    $(element).closest('.card').find('.quantity-product-display').text(new_quantity);
                     $(element).closest('.card').find('.total-price-product-display').text('Rp. ' + (new_quantity * product_price).toLocaleString('id-ID')); // Update harga produk per item
 
-                    $('#total_products').data('total_products', new_total_products).text(new_total_products); 
+                    $('#total_products').data('total_products', new_total_products).text(new_total_products);
                     $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
                     location.reload();
                 } else {
@@ -189,41 +197,40 @@
             }
         });
     }
-    
+
     function delProduct(element) {
-    var quantity = $(element).data('quantity');
-    var product_id = $(element).data('product_id');
-    var product_price = $(element).data('product_price');
-    var total_products = $('#total_products').data('total_products');
-    var total_prices = $('#total_prices').data('total_prices');
-    var new_total_products = total_products - quantity;
-    var new_total_prices = total_prices - (product_price * quantity);
+        var quantity = $(element).data('quantity');
+        var product_id = $(element).data('product_id');
+        var product_price = $(element).data('product_price');
+        var total_products = $('#total_products').data('total_products');
+        var total_prices = $('#total_prices').data('total_prices');
+        var new_total_products = total_products - quantity;
+        var new_total_prices = total_prices - (product_price * quantity);
 
-    $.ajax({
-        url: '{{ route("cart.del_product") }}',
-        method: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            product_id: product_id,
-            product_price: product_price,
-        },
-        success: function(response) {
-            if (response.success) {
-                alert(response.message);
-                $(element).closest('.card').remove();  
-                $('#total_products').data('total_products', new_total_products).text(new_total_products); 
-                $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
-                location.reload();
-            } else {
-                alert('Error: ' + response.message);
+        $.ajax({
+            url: '{{ route("cart.del_product") }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                product_id: product_id,
+                product_price: product_price,
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    $(element).closest('.card').remove();
+                    $('#total_products').data('total_products', new_total_products).text(new_total_products);
+                    $('#total_prices').data('total_prices', new_total_prices).text('Rp. ' + new_total_prices.toLocaleString('id-ID')); // Update total prices
+                    location.reload();
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function() {
+                alert('Terjadi kesalahan pada server.');
             }
-        },
-        error: function() {
-            alert('Terjadi kesalahan pada server.');
-        }
-    });
-}
-
+        });
+    }
 </script>
 
 @include('components.footer')
