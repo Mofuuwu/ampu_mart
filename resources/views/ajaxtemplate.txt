@@ -30,7 +30,7 @@ script :
         error: function() {
             alert('Terjadi kesalahan pada server.');
             $('#quantity-input').val('');
-        }
+        } delVoucherUsage()
     });
   }
 </script>

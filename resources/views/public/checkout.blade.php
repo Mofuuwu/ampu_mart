@@ -1,5 +1,11 @@
 @extends('templates.start-html')
 @include('components.navbar')
+@if ($products_in_cart->isEmpty())
+<script>
+    alert('Mohon tambahkan produk ke keranjang terlebih dahulu');
+    location.href = '/keranjang';
+</script>
+@endif
 <section class="my-5 px-[5%]">
     <div class="w-[100%] m-auto">
         <form class="flex justify-start">
@@ -82,10 +88,12 @@
                 </div>
                 <div class="mb-10">
                     <p class="text-darkblue font-bold">Voucher</p>
-                    <p class="text-slate-500 text-sm">Kami akan menggunakan email ini untuk mengirimkan rincian dan pembaruan mengenai pesanan Anda</p>
+                    <p class="text-slate-500 text-sm">Gunakan voucher untuk mendapatkan potongan harga</p>
+                    <p id="voucher-text-info" class="text-sm font-semibold hidden">Voucher Ditemukan</p>
                     <div class="flex justify-between gap-1 items-center mt-1">
-                        <input name="voucher" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
-                        <button class="bg-lightblue text-white px-3 py-1 font-semibold rounded-md">Gunakan</button>
+                        <input id="voucher-usage-input" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
+                        <button type="button" id="check-voucher-usage-btn" onclick="checkVoucher()" class="bg-lightblue text-white px-3 py-1 font-semibold rounded-md">Gunakan</button>
+                        <button type="button" id="del-voucher-usage-btn" onclick="delVoucherUsage()" class="bg-red-500 text-white px-3 py-1 font-semibold rounded-md hidden">Hapus</button>
                     </div>
                 </div>
 
@@ -165,6 +173,41 @@
 @include('components.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function checkVoucher() {
+        let voucher_code = $('#voucher-usage-input').val()
+        let text_info = $('#voucher-text-info').val()
+        $.ajax({
+            url: '{{ route("check.voucher") }}',
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content') // Ambil dari meta tag
+            },
+            data: {
+                voucher_code: voucher_code
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#voucher-text-info').removeClass('hidden text-red-500').addClass('text-green-500').text('Voucher Tersedia');
+                    $('#check-voucher-usage-btn').addClass('hidden')
+                    $('#del-voucher-usage-btn').removeClass('hidden')
+                }
+                else {
+                    $('#voucher-text-info').removeClass('hidden text-green-500').addClass('text-red-500').text('Voucher Tidak Ditemukan');
+                }
+            },
+            error: function(xhr, status, err) {  // Ubah 'error' jadi 'err'
+                    console.log("Error:", err);
+                    console.log("Response:", xhr.responseText);
+                }
+        })
+    }
+    function delVoucherUsage() {
+        $('#check-voucher-usage-btn').removeClass('hidden');
+        $('#del-voucher-usage-btn').addClass('hidden');
+        $('#voucher-usage-input').val('');
+        $('#voucher-text-info').addClass('hidden');
+    }
+
     $(document).ready(function() {
         // Event listener untuk tombol pickup
         $('#pickup-button').on('click', function() {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -64,7 +65,6 @@ class ActionController extends Controller
     }
     public function cart_del_quantity(Request $request)
     {
-        Log::info($request->all());
         $user_id = Auth::id();
         $product_id = $request->input('product_id');
         $quantity = $request->input('quantity');
@@ -127,5 +127,18 @@ class ActionController extends Controller
     }
     public function do_checkout (Request $request) {
         dd($request);
+    }
+    
+    public function check_voucher(Request $request) {
+        Log::info('Cek Voucher Request:', ['voucher_code' => $request->input('voucher_code')]);
+        $voucher_code = $request->input('voucher_code');
+        $result = Voucher::where('code', $voucher_code)->first();
+
+        if(!$result) {
+            return response()->json(['success' => false]);
+        }
+
+        return response()->json(['success' => true]);
+
     }
 }
