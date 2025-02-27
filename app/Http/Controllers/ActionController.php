@@ -119,32 +119,36 @@ class ActionController extends Controller
         }
 
         $products = $query->paginate(10);
-        
+
         return view('public.jelajahi-produk', [
             'products' => $products,
             'tags' => $tags,
         ]);
     }
-    public function do_checkout (Request $request) {
+    public function do_checkout(Request $request)
+    {
         dd($request);
     }
-    
-    public function check_voucher(Request $request) {
-        Log::info('Cek Voucher Request:', ['voucher_code' => $request->input('voucher_code')]);
-        $voucher_code = $request->input('voucher_code');
-        $result = Voucher::where('code', $voucher_code)->first();
 
-        if(!$result) {
-            return response()->json(['success' => false]);
+    public function check_voucher(Request $request)
+    {
+        $voucher_code = $request->input('voucher_code');
+        $now = now();
+
+        $result = Voucher::where('code', $voucher_code)
+            ->where('valid_from', '<=', $now)
+            ->where('valid_until', '>=', $now)
+            ->where('remaining', '>', 0)
+            ->first();
+
+        if (!$result) {
+            return response()->json(['success' => false, 'message' => 'Voucher tidak valid atau sudah habis']);
         }
-        
-        $voucher_value = $result->value;
-        $voucher_type = $result->type;
-    
+
         return response()->json([
             'success' => true,
-            'voucher_value' => $voucher_value,
-            'voucher_type' => $voucher_type
+            'voucher_value' => $result->value,
+            'voucher_type' => $result->type
         ]);
     }
 }
