@@ -91,7 +91,7 @@
                     <p class="text-slate-500 text-sm">Gunakan voucher untuk mendapatkan potongan harga</p>
                     <p id="voucher-text-info" class="text-sm font-semibold hidden">Voucher Ditemukan</p>
                     <div class="flex justify-between gap-1 items-center mt-1">
-                        <input id="voucher-usage-input" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
+                        <input name="voucher_code" id="voucher-usage-input" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
                         <button type="button" id="check-voucher-usage-btn" onclick="checkVoucher()" class="bg-lightblue text-white px-3 py-1 font-semibold rounded-md">Gunakan</button>
                         <button type="button" id="del-voucher-usage-btn" onclick="delVoucherUsage()" class="bg-red-500 text-white px-3 py-1 font-semibold rounded-md hidden">Hapus</button>
                     </div>
@@ -124,10 +124,10 @@
                     <p class="text-slate-500 text-sm">Ringkasan pembelian anda.</p>
                     <div class="bg-white p-4 mt-1 rounded-md border-slate-400 border-2 border-opacity-50">
                         <p class="text-slate-500 text-sm">Metode Pembayaran : <span class="text-darkblue font-semibold">Bayar Di Tempat</span></p>
-                        <p class="text-slate-500 text-sm">Harga Awal : <span class="text-darkblue font-semibold">Rp. {{ number_format($products_in_cart->sum('total_price'), '0', ',', '.' ) }}</span></p>
-                        <p class="text-slate-500 text-sm">Subtotal Pengiriman : <span class="text-darkblue font-semibold">Rp. {{ '20.000' }}</span></p>
-                        <p class="text-slate-500 text-sm">Diskon : <span class="text-darkblue font-semibold">-</span></p>
-                        <p class="text-slate-500 text-sm">Total Harga : <span class="text-darkblue font-semibold">Rp. 820.000</span></p>
+                        <p class="text-slate-500 text-sm">Harga Awal : <span id="starting_price" class="text-darkblue font-semibold">Rp. {{ number_format($products_in_cart->sum('total_price'), '0', ',', '.' ) }}</span></p>
+                        <p class="text-slate-500 text-sm">Subtotal Pengiriman : <span id="delivery-price" class="text-darkblue font-semibold">-</span></p>
+                        <p class="text-slate-500 text-sm">Diskon : <span id="discount-text" class="text-darkblue font-semibold">-</span></p>
+                        <p class="text-slate-500 text-sm">Total Harga : <span id="final_price" class="text-darkblue font-semibold">-</span></p>
                     </div>
                 </div>
                 <input type="hidden" name="products" value="{{ $products_in_cart }}">
@@ -135,7 +135,6 @@
                     <button type="submit" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
                     <p class="mt-1 text-slate-500 text-sm px-2 md:px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
                 </div>
-
 
             </div>
         </form>
@@ -190,22 +189,31 @@
                     $('#voucher-text-info').removeClass('hidden text-red-500').addClass('text-green-500').text('Voucher Tersedia');
                     $('#check-voucher-usage-btn').addClass('hidden')
                     $('#del-voucher-usage-btn').removeClass('hidden')
-                }
-                else {
+                    $('#discount-text').text(new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    }).format(response.voucher_value));
+                    updateFinalPrice();
+                } else {
                     $('#voucher-text-info').removeClass('hidden text-green-500').addClass('text-red-500').text('Voucher Tidak Ditemukan');
                 }
             },
-            error: function(xhr, status, err) {  // Ubah 'error' jadi 'err'
-                    console.log("Error:", err);
-                    console.log("Response:", xhr.responseText);
-                }
+            error: function(xhr, status, err) { // Ubah 'error' jadi 'err'
+                console.log("Error:", err);
+                console.log("Response:", xhr.responseText);
+            }
         })
     }
+
     function delVoucherUsage() {
+        $('#discount-text').text('-');
         $('#check-voucher-usage-btn').removeClass('hidden');
         $('#del-voucher-usage-btn').addClass('hidden');
         $('#voucher-usage-input').val('');
         $('#voucher-text-info').addClass('hidden');
+        updateFinalPrice();
     }
 
     $(document).ready(function() {
@@ -250,6 +258,36 @@
         });
 
     });
+
+    function updateFinalPrice() {
+        let startingPrice = parseInt($('#starting_price').text().replace(/[^\d]/g, ''));
+        let discount = parseInt($('#discount-text').text().replace(/[^\d]/g, '')) || 0;
+        let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
+
+        let finalPrice = startingPrice - discount + deliveryPrice;
+        let formattedPrice = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(finalPrice);
+
+        $('#final_price').text(formattedPrice);
+    }
+
+    $(document).ready(function() {
+        updateFinalPrice();
+    });
+
+    $('input[name="delivery-method"]').on('change', function () {
+    if ($('#delivery-button').is(':checked')) {
+        $('#delivery-price').text('Rp 20.000');
+    } else if ($('#pickup-button').is(':checked')) {
+        $('#delivery-price').text('Rp 0');
+    }
+    updateFinalPrice(); // Perbarui total harga
+});
+
 </script>
 
 
