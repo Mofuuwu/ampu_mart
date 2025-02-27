@@ -137,8 +137,14 @@ class ActionController extends Controller
         if(!$result) {
             return response()->json(['success' => false]);
         }
-
-        return response()->json(['success' => true, 'voucher_value' => $result->value]);
-
+        
+        $voucher_value = $result->value;
+        $voucher_type = $result->type;
+    
+        return response()->json([
+            'success' => true,
+            'voucher_value' => $voucher_value,
+            'voucher_type' => $voucher_type
+        ]);
     }
 }

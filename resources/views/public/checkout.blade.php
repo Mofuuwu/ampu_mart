@@ -95,6 +95,7 @@
                         <button type="button" id="check-voucher-usage-btn" onclick="checkVoucher()" class="bg-lightblue text-white px-3 py-1 font-semibold rounded-md">Gunakan</button>
                         <button type="button" id="del-voucher-usage-btn" onclick="delVoucherUsage()" class="bg-red-500 text-white px-3 py-1 font-semibold rounded-md hidden">Hapus</button>
                     </div>
+                    <p id="voucher-text-value" class="text-sm font-semibold text-lightblue hidden"></p>
                 </div>
 
                 <div class="mb-10">
@@ -172,6 +173,9 @@
 @include('components.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    let discountType = ""; 
+    let discountValue = 0; 
+
     function checkVoucher() {
         let voucher_code = $('#voucher-usage-input').val()
         let text_info = $('#voucher-text-info').val()
@@ -179,22 +183,47 @@
             url: '{{ route("check.voucher") }}',
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content') // Ambil dari meta tag
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content') 
             },
             data: {
                 voucher_code: voucher_code
             },
             success: function(response) {
                 if (response.success) {
+                discountType = response.voucher_type;  
+                discountValue = response.voucher_value;
+
+                
+                // Ambil nilai harga awal, harga pengiriman, dan final price sebelum diskon
+                let startingPrice = parseInt($('#starting_price').text().replace(/[^\d]/g, '')) || 0;
+                let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
+                let finalPrice = startingPrice + deliveryPrice; // Harga total sebelum diskon
+                
+                let discount = 0;
+
+                if (discountType === 'percentage') {
+                    discount = (discountValue / 100)* finalPrice;
+                } else if (discountType === 'fixed') {
+                    discount = discountValue;
+                }
+
+                // Pastikan diskon tidak melebihi total harga
+                if (discount > finalPrice) {
+                    discount = finalPrice;
+                }
+
+                let formattedDiscount = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(discount);
+
                     $('#voucher-text-info').removeClass('hidden text-red-500').addClass('text-green-500').text('Voucher Tersedia');
+                    $('#voucher-text-value').removeClass('hidden').text('Mendapatkan potongan harga sebesar : ' + formattedDiscount);
                     $('#check-voucher-usage-btn').addClass('hidden')
                     $('#del-voucher-usage-btn').removeClass('hidden')
-                    $('#discount-text').text(new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
-                    }).format(response.voucher_value));
+                    $('#discount-text').text(formattedDiscount)
                     updateFinalPrice();
                 } else {
                     $('#voucher-text-info').removeClass('hidden text-green-500').addClass('text-red-500').text('Voucher Tidak Ditemukan');
@@ -213,6 +242,9 @@
         $('#del-voucher-usage-btn').addClass('hidden');
         $('#voucher-usage-input').val('');
         $('#voucher-text-info').addClass('hidden');
+        $('#voucher-text-value').addClass('hidden');
+        discountType = ""; 
+        discountValue = 0; 
         updateFinalPrice();
     }
 
@@ -260,20 +292,39 @@
     });
 
     function updateFinalPrice() {
-        let startingPrice = parseInt($('#starting_price').text().replace(/[^\d]/g, ''));
-        let discount = parseInt($('#discount-text').text().replace(/[^\d]/g, '')) || 0;
-        let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
+    let startingPrice = parseInt($('#starting_price').text().replace(/[^\d]/g, '')) || 0;
+    let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
+    let secondPrice = startingPrice + deliveryPrice;
 
-        let finalPrice = startingPrice - discount + deliveryPrice;
-        let formattedPrice = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }).format(finalPrice);
+    let discountAmount = 0; // Variabel untuk menyimpan jumlah diskon yang benar
 
-        $('#final_price').text(formattedPrice);
+    if (discountType === 'percentage') {
+        discountAmount = Math.floor((discountValue / 100) * secondPrice); // Dibagi 100 dulu!
+    } else {
+        discountAmount = discountValue; 
     }
+
+    let formattedDiscount = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(discountAmount);
+
+    $('#discount-text').text(formattedDiscount); 
+
+    let finalPrice = secondPrice - discountAmount;
+
+    let formattedPrice = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(finalPrice);
+
+    $('#final_price').text(formattedPrice);
+}
+
 
     $(document).ready(function() {
         updateFinalPrice();
