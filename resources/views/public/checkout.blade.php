@@ -6,7 +6,13 @@
     location.href = '/keranjang';
 </script>
 @endif
-<section class="my-5 px-[5%]">
+@if ($addresses->isEmpty())
+<script>
+    alert('Tambahkan Minimal 1 Lokasi Untuk Pengiriman Pesanan Di Profil');
+    location.href = '/keranjang';
+</script>
+@endif
+<section class="my-5 px-[5%] relative">
     <div class="w-[100%] m-auto">
         <form class="flex justify-start">
             <p class="text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Checkout</p>
@@ -29,7 +35,7 @@
                         <!-- Bagian Pengiriman -->
                         <div class="w-1/2">
                             <label id="pickup-label" class="cursor-pointer w-full border-lightblue bg-lightblue text-white font-semibold gap-1 border-2 rounded-md py-3 flex justify-center items-center">
-                                <input type="radio" name="delivery-method" id="pickup-button" class="hidden" value="pickup">
+                                <input checked type="radio" name="delivery_method" id="pickup-button" class="hidden" value="pickup">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                     <path d="M5.223 2.25c-.497 0-.974.198-1.325.55l-1.3 1.298A3.75 3.75 0 0 0 7.5 9.75c.627.47 1.406.75 2.25.75.844 0 1.624-.28 2.25-.75.626.47 1.406.75 2.25.75.844 0 1.623-.28 2.25-.75a3.75 3.75 0 0 0 4.902-5.652l-1.3-1.299a1.875 1.875 0 0 0-1.325-.549H5.223Z" />
                                     <path fill-rule="evenodd" d="M3 20.25v-8.755c1.42.674 3.08.673 4.5 0A5.234 5.234 0 0 0 9.75 12c.804 0 1.568-.182 2.25-.506a5.234 5.234 0 0 0 2.25.506c.804 0 1.567-.182 2.25-.506 1.42.674 3.08.675 4.5.001v8.755h.75a.75.75 0 0 1 0 1.5H2.25a.75.75 0 0 1 0-1.5H3Zm3-6a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-3a.75.75 0 0 1-.75-.75v-3Zm8.25-.75a.75.75 0 0 0-.75.75v5.25c0 .414.336.75.75.75h3a.75.75 0 0 0 .75-.75v-5.25a.75.75 0 0 0-.75-.75h-3Z" clip-rule="evenodd" />
@@ -42,7 +48,7 @@
                         <!-- Bagian Kirim -->
                         <div class="w-1/2">
                             <label id="delivery-label" class="cursor-pointer w-full border-lightblue bg-white text-lightblue font-semibold gap-1 border-2 rounded-md py-3 flex justify-center items-center">
-                                <input type="radio" name="delivery-method" id="delivery-button" class="hidden" value="delivery">
+                                <input type="radio" name="delivery_method" id="delivery-button" class="hidden" value="delivery">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                                 </svg>
@@ -91,7 +97,8 @@
                     <p class="text-slate-500 text-sm">Gunakan voucher untuk mendapatkan potongan harga</p>
                     <p id="voucher-text-info" class="text-sm font-semibold hidden">Voucher Ditemukan</p>
                     <div class="flex justify-between gap-1 items-center mt-1">
-                        <input name="voucher_code" id="voucher-usage-input" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
+                        <input id="voucher-usage-input" class="w-full h-full outline-none rounded-md px-3 py-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50" type="text" placeholder="Voucher">
+                        <input id="voucher-val" type="hidden" name="voucher_code" value="">
                         <button type="button" id="check-voucher-usage-btn" onclick="checkVoucher()" class="bg-lightblue text-white px-3 py-1 font-semibold rounded-md">Gunakan</button>
                         <button type="button" id="del-voucher-usage-btn" onclick="delVoucherUsage()" class="bg-red-500 text-white px-3 py-1 font-semibold rounded-md hidden">Hapus</button>
                     </div>
@@ -132,13 +139,28 @@
                     </div>
                 </div>
                 <input type="hidden" name="products" value="{{ $products_in_cart }}">
+                <input type="hidden" name="starting_price" value="{{ $products_in_cart->sum('total_price')  }}">
+
                 <div class="mb-10">
-                    <button type="submit" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
+                    <button onclick="showConfirmModal(event)" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
                     <p class="mt-1 text-slate-500 text-sm px-2 md:px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
                 </div>
 
             </div>
+            <!-- <div id="confirm-modal" class="hidden fixed w-[100%] bg-black bg-opacity-70 top-0 left-0 h-full flex items-center justify-center flex-col gap-2">
+                <div class=" bg-slate-200 p-3 w-[50%] rounded-md">
+                        <p class="text-slate-500 text-sm">Metode Pembayaran : <span class="text-darkblue font-semibold">Bayar Di Tempat</span></p>
+                        <p class="text-slate-500 text-sm">Harga Awal : <span id="starting_price" class="text-darkblue font-semibold">Rp. {{ number_format($products_in_cart->sum('total_price'), '0', ',', '.' ) }}</span></p>
+                        <p id="delivery-" class="text-slate-500 text-sm">Subtotal Pengiriman : <span id="delivery-price" class="text-darkblue font-semibold">-</span></p>
+                        <p class="text-slate-500 text-sm">Diskon : <span id="discount-text" class="text-darkblue font-semibold">-</span></p>
+                        <p class="text-slate-500 text-sm">Total Harga : <span id="final_price" class="text-darkblue font-semibold">-</span></p>
+                </div>
+                <div class="w-[50%]">
+                    <button type="submit" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Konfirmasi Pembelian</button>
+                </div>
+            </div> -->
         </form>
+
         <div id="right-content" class="w-full md:w-[40%]">
             <div class=" bg-white p-4 rounded-[12px] w-full border-slate-400 border-2 border-opacity-50 mb-10">
                 <div class="flex justify-between text-darkblue ">
@@ -177,6 +199,16 @@
     let discountType = "";
     let discountValue = 0;
 
+    function showConfirmModal(event) {
+        event.preventDefault();
+
+        let isConfirmed = confirm('Konfirmasi Pembelian');
+        if (isConfirmed) {
+            $('#left-content').submit();
+        }
+    }
+
+
     function checkVoucher() {
         let voucher_code = $('#voucher-usage-input').val()
         let text_info = $('#voucher-text-info').val()
@@ -196,7 +228,7 @@
 
                     let startingPrice = parseInt($('#starting_price').text().replace(/[^\d]/g, '')) || 0;
                     let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
-                    let finalPrice = startingPrice + deliveryPrice; 
+                    let finalPrice = startingPrice + deliveryPrice;
 
                     let discount = 0;
 
@@ -222,14 +254,18 @@
                     $('#check-voucher-usage-btn').addClass('hidden')
                     $('#del-voucher-usage-btn').removeClass('hidden')
                     $('#discount-text').text(formattedDiscount)
+                    $('#voucher-val').val(voucher_code)
                     updateFinalPrice();
                 } else {
-                    $('#voucher-text-info').removeClass('hidden text-green-500').addClass('text-red-500').text('Voucher Tidak Ditemukan');
+                    $('#voucher-text-info').removeClass('hidden text-green-500').addClass('text-red-500').text(response.message);
+                    $('#check-voucher-usage-btn').addClass('hidden')
+                    $('#del-voucher-usage-btn').removeClass('hidden')
                 }
             },
             error: function(xhr, status, err) {
                 console.log("Error:", err);
                 console.log("Response:", xhr.responseText);
+                $('#voucher-usage-input').val('');
             }
         })
     }
@@ -241,6 +277,7 @@
         $('#voucher-usage-input').val('');
         $('#voucher-text-info').addClass('hidden');
         $('#voucher-text-value').addClass('hidden');
+        $('#voucher-val').val('')
         discountType = "";
         discountValue = 0;
         updateFinalPrice();
@@ -293,10 +330,10 @@
         let deliveryPrice = parseInt($('#delivery-price').text().replace(/[^\d]/g, '')) || 0;
         let secondPrice = startingPrice + deliveryPrice;
 
-        let discountAmount = 0; 
+        let discountAmount = 0;
 
         if (discountType === 'percentage') {
-            discountAmount = Math.floor((discountValue / 100) * secondPrice); 
+            discountAmount = Math.floor((discountValue / 100) * secondPrice);
         } else {
             discountAmount = discountValue;
         }
@@ -328,13 +365,13 @@
         updateFinalPrice();
     });
 
-    $('input[name="delivery-method"]').on('change', function() {
+    $('input[name="delivery_method"]').on('change', function() {
         if ($('#delivery-button').is(':checked')) {
             $('#delivery-price').text('Rp 20.000');
         } else if ($('#pickup-button').is(':checked')) {
             $('#delivery-price').text('Rp 0');
         }
-        updateFinalPrice(); 
+        updateFinalPrice();
     });
 </script>
 

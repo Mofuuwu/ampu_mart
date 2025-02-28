@@ -27,9 +27,11 @@ class PublicController extends Controller
     // }
     public function cart()
     {
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         return view('public.keranjang', [
-            'products_in_cart' => $products_in_cart
+            'products_in_cart' => $products_in_cart,
+            'addresses' => $addresses
         ]);
     }
     public function checkout()

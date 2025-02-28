@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('voucher_usages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('voucher_id');
+            $table->string('voucher_code');
             $table->unsignedBigInteger('order_id');
             $table->dateTime('usage_date');
             $table->timestamps();

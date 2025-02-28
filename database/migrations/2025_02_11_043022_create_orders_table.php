@@ -16,9 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('price');
             $table->decimal('final_price');
-            $table->unsignedBigInteger('address_id');
+            $table->string('delivery_method');
+            $table->unsignedBigInteger('address_id')->nullable();
             $table->dateTime('order_date');
-            $table->dateTime('completion_date');
+            $table->dateTime('completion_date')->nullable();
             $table->timestamps();
         });
     }

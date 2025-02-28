@@ -88,7 +88,7 @@
                         <p id="total_prices" data-total_prices="{{ $products_in_cart->sum('total_price') }}" class="flex justify-between text-darkblue font-bold text-2xl">{{ 'Rp ' . number_format($products_in_cart->sum('total_price'), 0, ',', '.') }}</p>
                     </div>
                 </div>
-                <button id="btn_checkout" onclick="cart_check()" data-products_in_cart="{{ $products_in_cart }}" href="/checkout" class="bg-lightblue w-full h-fit px-3 py-2 mt-2 cursor-pointer flex justify-center items-center text-white hover:bg-hoverblue font-semibold font-sour-gummy">
+                <button id="btn_checkout" onclick="cart_check()" data-products_in_cart="{{ $products_in_cart }}" data-addresses="{{ $addresses }}" href="/checkout" class="bg-lightblue w-full h-fit px-3 py-2 mt-2 cursor-pointer flex justify-center items-center text-white hover:bg-hoverblue font-semibold font-sour-gummy">
                     Checkout Sekarang
                 </button>
             </div>
@@ -103,8 +103,11 @@
 <script>
     function cart_check() {
         var products_in_cart = $('#btn_checkout').data('products_in_cart');
+        var addresses = $('#btn_checkout').data('addresses');
         if (!products_in_cart || products_in_cart.length === 0) {
             return alert('Tidak ada produk di keranjang');
+        } if (!addresses || addresses.length === 0) {
+            return alert('Tambahkan Minimal 1 Lokasi Untuk Pengiriman Pesanan Di Profil')
         }
         location.href = '/checkout';
     }

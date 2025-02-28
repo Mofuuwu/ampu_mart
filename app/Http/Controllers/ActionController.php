@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Voucher;
+use App\Models\VoucherUsage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -125,10 +127,6 @@ class ActionController extends Controller
             'tags' => $tags,
         ]);
     }
-    public function do_checkout(Request $request)
-    {
-        dd($request);
-    }
 
     public function check_voucher(Request $request)
     {
@@ -143,6 +141,13 @@ class ActionController extends Controller
 
         if (!$result) {
             return response()->json(['success' => false, 'message' => 'Voucher tidak valid atau sudah habis']);
+        }
+
+        $has_usaged = VoucherUsage::where('voucher_code', $result->code)
+            ->where('user_id', Auth::user()->id)->exists(); 
+
+        if ($has_usaged) {
+            return response()->json(['success' => false, 'message' => 'Kode Voucher Telah Digunakan Sebelumnya']);
         }
 
         return response()->json([

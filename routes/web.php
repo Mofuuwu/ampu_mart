@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\LoginRedirect;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,6 @@ Route::post('/profile/change_password', [AuthController::class, 'change_password
 Route::post('/profile/add_address', [AuthController::class, 'add_address'])->name('add.address')->middleware('auth');
 Route::get('/profile/del_address/{id}', [AuthController::class, 'del_address'])->name('del.address')->middleware('auth');
 
-Route::post('/checkout', [ActionController::class, 'do_checkout'])->middleware('auth');
+Route::post('/checkout', [TransactionController::class, 'do_checkout'])->middleware('auth');
 
 Route::post('/helper/check-voucher', [ActionController::class, 'check_voucher'])->middleware('auth')->name('check.voucher');
