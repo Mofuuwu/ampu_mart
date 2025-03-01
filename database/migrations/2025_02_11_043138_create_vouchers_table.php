@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->enum('type', ['fixed', 'percentage']);
-            $table->decimal('value');
+            $table->decimal('value', 12, 2);
             $table->date('valid_from');
             $table->date('valid_until');
             $table->integer('amount');

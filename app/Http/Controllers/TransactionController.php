@@ -43,9 +43,9 @@ class TransactionController extends Controller
         $note = $request->note;
         $voucher_code = $request->voucher_code;
         $discount_value = 0;
-        $order_id = 
+        $order_id =
 
-        $final_price = 0;
+            $final_price = 0;
 
         if ($voucher_code != null) {
             $voucher = Voucher::where('code', $voucher_code)
@@ -54,9 +54,9 @@ class TransactionController extends Controller
                 ->where('remaining', '>', 0)
                 ->first();
 
-            if($delivery_method === 'delivery') {
+            if ($delivery_method === 'delivery') {
                 if ($voucher->type === 'percentage') {
-                    $discount_value = ( $starting_price + $delivery_fee ) * ( $voucher->value / 100 );
+                    $discount_value = ($starting_price + $delivery_fee) * ($voucher->value / 100);
                     $final_price = $starting_price + $delivery_fee - $discount_value;
                 } else if ($voucher->type === 'fixed') {
                     $discount_value = $voucher->value;
@@ -64,7 +64,7 @@ class TransactionController extends Controller
                 }
             } else if ($delivery_method === 'pickup') {
                 if ($voucher->type === 'percentage') {
-                    $discount_value = $starting_price * ( $voucher->value / 100 );
+                    $discount_value = $starting_price * ($voucher->value / 100);
                     $final_price = $starting_price - $discount_value;
                 } else if ($voucher->type === 'fixed') {
                     $discount_value = $voucher->value;
@@ -74,10 +74,9 @@ class TransactionController extends Controller
         } else {
             if ($delivery_method === 'delivery') {
                 $final_price = $starting_price + $delivery_fee;
-            }
-            else if ($delivery_method === 'pickup') {
+            } else if ($delivery_method === 'pickup') {
                 $final_price = $starting_price;
-            } 
+            }
         }
 
         $order_result = Order::create([
@@ -89,16 +88,23 @@ class TransactionController extends Controller
             'address_id' => $address_id,
             'order_date' => $now,
         ]);
-
-        foreach ($products as $product) {
-            OrderItem::create([
-                'product_id' => $product->product_id,
-                'order_id' => $newOrderId,
-                'amount' => $product->quantity,
-                'total_price' => $product->total_price
-            ]);
+        if ($order_result) {
+            foreach ($products as $product) {
+                OrderItem::create([
+                    'product_id' => $product->product_id,
+                    'order_id' => $newOrderId,
+                    'amount' => $product->quantity,
+                    'total_price' => $product->total_price
+                ]);
+                $productData = Product::find($product->product_id);
+                if ($productData) {
+                    $productData->stock -= $product->quantity;
+                    $productData->save();
+                }
+            }
         }
-        
+        $carts = Cart::where('user_id', $user_id)->delete();
+
         if ($voucher_code != null) {
             VoucherUsage::create([
                 'user_id' => $user_id,
@@ -115,10 +121,10 @@ class TransactionController extends Controller
             $voucher->remaining -= 1;
             $voucher->save();
         }
-
     }
 
-    public function invoice_detail($id) {
+    public function invoice_detail($id)
+    {
         $order_id = Order::findOrFail($id);
         return view('public.after-checkout', ['order_id' => $order_id]);
     }

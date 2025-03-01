@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('desc')->comment('contohnya : deposit, pembelian, dll');
             $table->enum( 'type', ['increase', 'decrease']);
-            $table->decimal('amount');
+            $table->decimal('amount', 12, 2);
             $table->timestamps();
         });
     }

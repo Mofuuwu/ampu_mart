@@ -24,6 +24,7 @@
 - menambahkan fungsi edit alamat pada profil
 - membuat halaman profil menjadi dinamis
 - jika keranjang 0 maka tidak bisa checkout
+- menyelesaikan sistem transaksi dan logika penambahakn data ke database
 
 #Belum Selesai
 - menambahkan policy pada checkout, karena user masih tetap bisa mengakses halaman menggunakan url
@@ -31,5 +32,8 @@
 - belajar ajax
 - halaman riwayat transaksi pada profil
 - menambahkan fungsi detail transaksi pada profil
-- menyelesaikan sistem transaksi dan logika penambahakn data ke database
 - membuat halaman admin
+
+- menambahkan detail transaksi / invoice pada after checkout
+- ketika tombol lakukan pemesanan di klik, akan mengirimkan request ajax ke server, akan mengecek apakah produk tersedia atau tidak, 
+    jika produk berkurang karena aa yg membeli, tampilkan peringatan dan refresh halaman

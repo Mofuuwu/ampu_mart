@@ -32,7 +32,7 @@
         <div id="right-content" class="w-full lg:w-[80%]">
             <div class="card flex gap-2 flex-col md:flex-row">
                 <div class="relative card-left bg-green-500 w-full md:min-w-[300px] min-h-[300px] md:w-[300px] h-[300px] shadow-md rounded-[16px] overflow-hidden flex items-center justify-center bg-center bg-cover " style="background-image: url('{{ asset("storage/" . $product->image_url) }}')">
-                    <p class="absolute py-2 px-5 rounded-br-[16px] bg-customorange bg-opacity-80 text-white text-lg shadow-md top-0 left-0"><span class=" font-semibold">{{ $product->stock }}</span><span class=" font-sour-gummy"> Tersisa</span></p>
+                    <p class="absolute py-2 px-5 rounded-br-[16px] bg-customorange bg-opacity-80 text-white text-lg shadow-md top-0 left-0"><span id="remaining-stock" data-remaining_stock="{{$product->stock}}" class=" font-semibold">{{ $product->stock }}</span><span class=" font-sour-gummy"> Tersisa</span></p>
                 </div>
                 <div class="card-right">
                     <p class="font-bold text-xl md:text-3xl text-darkblue">{{ $product->name }}</p>
@@ -72,9 +72,22 @@
 <script>
   function addToCart(element) {
     var quantity = $('#quantity-input').val();
+    var remain = $('#remaining-stock').data('remaining_stock');
     var id = $(element).data('id');  
     var product = $(element).data('product');  
     var price = $(element).data('price') * quantity;  
+
+    if (remain === 0) {
+        return alert('produk telah habis')
+    }
+
+    if (!quantity || isNaN(quantity) || quantity <= 0) {
+        return alert('harap masukkan nilai yg valid')
+    }
+
+    if (quantity > remain) {
+        return alert('tidak bisa menambahkan produk melebihi jumlah stok')
+    } 
 
     $.ajax({
         url: '{{ route("add_to_cart") }}',
