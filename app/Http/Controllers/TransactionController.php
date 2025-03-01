@@ -21,9 +21,17 @@ class TransactionController extends Controller
             'email' => 'required|email',
         ]);
 
-        dd($request); 
+        // dd($request); 
 
         $now = now();
+        $currentDate = now()->format('YmdHis');
+        $lastOrder = Order::where('order_id', 'like', $currentDate . '%')
+            ->orderBy('order_id', 'desc')
+            ->first();
+        $lastIdNumber = $lastOrder ? (int) substr($lastOrder->order_id, 14) : 0;
+        $newOrderId = $currentDate . str_pad($lastIdNumber + 1, 3, '0', STR_PAD_LEFT);
+
+
 
         $user_id = Auth::User()->id;
         $user_email = $validatedData['email'];
@@ -35,6 +43,7 @@ class TransactionController extends Controller
         $note = $request->note;
         $voucher_code = $request->voucher_code;
         $discount_value = 0;
+        $order_id = 
 
         $final_price = 0;
 
@@ -72,6 +81,7 @@ class TransactionController extends Controller
         }
 
         $order_result = Order::create([
+            'order_id' => $newOrderId,
             'user_id' => $user_id,
             'price' => $starting_price,
             'final_price' => $final_price,
@@ -83,7 +93,7 @@ class TransactionController extends Controller
         foreach ($products as $product) {
             OrderItem::create([
                 'product_id' => $product->product_id,
-                'order_id' => $order_result->id,
+                'order_id' => $newOrderId,
                 'amount' => $product->quantity,
                 'total_price' => $product->total_price
             ]);
@@ -106,5 +116,10 @@ class TransactionController extends Controller
             $voucher->save();
         }
 
+    }
+
+    public function invoice_detail($id) {
+        $order_id = Order::findOrFail($id);
+        return view('public.after-checkout', ['order_id' => $order_id]);
     }
 }

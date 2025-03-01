@@ -31,5 +31,6 @@ Route::post('/profile/add_address', [AuthController::class, 'add_address'])->nam
 Route::get('/profile/del_address/{id}', [AuthController::class, 'del_address'])->name('del.address')->middleware('auth');
 
 Route::post('/checkout', [TransactionController::class, 'do_checkout'])->middleware('auth');
+Route::get('/profile/invoice/detail/{id}', [TransactionController::class, 'invoice_detail'])->middleware('auth');
 
 Route::post('/helper/check-voucher', [ActionController::class, 'check_voucher'])->middleware('auth')->name('check.voucher');

@@ -9,6 +9,9 @@ class Order extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
+    protected $primaryKey = 'order_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $guarded = [];
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
