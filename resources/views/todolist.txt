@@ -27,15 +27,20 @@
 - menyelesaikan sistem transaksi dan logika penambahakn data ke database
 - ketika tombol checkout di klik pada keranjang, kirimkan ajax ke server apakah produk yg tersedia melebihi yg di keranjang, jika melebihi 
     maka refresh halaman dan munculkan alert serta perbarui produk di keranjang
+- halaman riwayat transaksi pada profil
+- menambahkan fungsi detail transaksi pada profil
+- ketika tombol lakukan pemesanan di klik pada /checkout, akan mengirimkan request ajax ke server, akan mengecek apakah produk tersedia atau tidak, 
+    jika produk berkurang karena aa yg membeli, tampilkan peringatan dan refresh halaman
 
 #Belum Selesai
 - menambahkan policy pada checkout, karena user masih tetap bisa mengakses halaman menggunakan url
 - menambahkan focus : text-lightblue pada checkout
 - belajar ajax
-- halaman riwayat transaksi pada profil
-- menambahkan fungsi detail transaksi pada profil
 - membuat halaman admin
 
+- jika completion date belum ada atau pesanan belum selesai, ganti ikon di invoice menjadi diproses
 - menambahkan detail transaksi / invoice pada after checkout
-- ketika tombol lakukan pemesanan di klik pada /checkout, akan mengirimkan request ajax ke server, akan mengecek apakah produk tersedia atau tidak, 
-    jika produk berkurang karena aa yg membeli, tampilkan peringatan dan refresh halaman
+- redirect setelah pembelian ke invoice
+- cetak invoice ke pdf
+- membuat fitur balance
+- tidak bisa membeli menggunakan balance jika balance == 0

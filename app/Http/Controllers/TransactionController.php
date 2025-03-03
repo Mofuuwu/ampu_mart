@@ -17,6 +17,7 @@ class TransactionController extends Controller
 {
     public function do_checkout(Request $request)
     {
+
         $validatedData = $request->validate([
             'email' => 'required|email',
         ]);
@@ -41,11 +42,10 @@ class TransactionController extends Controller
         $delivery_fee = 20000;
         $address_id = $request->alamat;
         $note = $request->note;
+        $payment_option = $request->payment_option;
         $voucher_code = $request->voucher_code;
         $discount_value = 0;
-        $order_id =
-
-            $final_price = 0;
+        $final_price = 0;
 
         if ($voucher_code != null) {
             $voucher = Voucher::where('code', $voucher_code)
@@ -82,9 +82,12 @@ class TransactionController extends Controller
         $order_result = Order::create([
             'order_id' => $newOrderId,
             'user_id' => $user_id,
+            'email' => $user_email,
             'price' => $starting_price,
             'final_price' => $final_price,
             'delivery_method' => $delivery_method,
+            'payment_option' => $payment_option,
+            'note' => $note,
             'address_id' => $address_id,
             'order_date' => $now,
         ]);

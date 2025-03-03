@@ -22,4 +22,7 @@ class Order extends Model
     public function voucher_usage() {
         return $this->belongsTo(VoucherUsage::class, 'order_id');
     }
+    public function address() {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
 }

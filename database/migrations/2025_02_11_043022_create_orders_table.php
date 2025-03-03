@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->string('order_id')->primary();
             $table->unsignedBigInteger('user_id');
+            $table->string('email');
             $table->decimal('price', 12, 2);
             $table->decimal('final_price', 12, 2);
             $table->string('delivery_method');
+            $table->string('payment_option');
+            $table->string('note')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
             $table->dateTime('order_date');
             $table->dateTime('completion_date')->nullable();

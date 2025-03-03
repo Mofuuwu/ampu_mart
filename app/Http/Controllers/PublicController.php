@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,7 +93,8 @@ class PublicController extends Controller
     public function profile()
     {
         $addresses = Address::where('user_id', Auth::user()->id)->get();
-        return view('auth.profile', ['addresses' => $addresses]);
+        $orders_history = Order::where('user_id', Auth::user()->id)->get();
+        return view('auth.profile', ['addresses' => $addresses, 'orders_history' => $orders_history]);
     }
     public function login()
     {

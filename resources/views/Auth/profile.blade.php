@@ -118,8 +118,10 @@
                 </ul>
                 <div class="min-w-full min-h-[2px] bg-lightblue">
                 </div>
-                <a href="#" class="card-container w-full gap-2 cursor-pointer">
-                    <ul class="bg-lightblue flex justify-between my-1 px-2 py-1">
+
+                <div class="card-container w-full gap-2 cursor-pointer">
+                    @foreach ($orders_history as $order)
+                    <a href="{{ route('view.invoice', $order->order_id)  }}" class="bg-lightblue flex justify-between my-1 px-2 py-1">
                         <div class="flex items-center">
                             <div class="flex justify-center items-center p-2 text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
@@ -127,18 +129,24 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="font-semibold text-white">KSJASNSJ</p>
-                                <p class="font-semibold text-yellow-300 text-sm">Rp. 24.000</p>
+                                <p class="font-semibold text-white">{{ $order->order_id }}</p>
+                                <p class="font-semibold text-yellow-300 text-sm">
+                                    Rp {{ number_format($order->final_price, 0, ',', '.') }}
+                                </p>
+
                             </div>
                         </div>
                         <div class="flex items-center">
                             <div>
-                                <p class="font-normal text-gray-200 text-sm text-left flex justify-end">27 Januari 2025</p>
-                                <p class="font-semibold text-white flex justify-end">Selesai</p>
+                                <p class="font-normal text-gray-200 text-sm text-left flex justify-end">
+                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y - H:i') }}
+                                </p>
+                                <p class="font-semibold text-white flex justify-end">{{ $order->completion_date ? 'Selesai' : 'Belum Selesai' }}</p>
                             </div>
                         </div>
-                    </ul>
-                </a>
+                    </a>
+                    @endforeach
+                </div>
             </div>
             <div id="my-logout-section" class="hidden right-content w-full md:w-[full] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
                 <p class="font-semibold text-lightblue">Logout</p>
@@ -171,14 +179,14 @@
         $('#address-modal-1').hide();
         $('#address-modal-2').show();
         $('#show-address-modal').hide();
-        $('#close-address-modal').removeClass('hidden'); 
+        $('#close-address-modal').removeClass('hidden');
     }
 
     function closeAddAddress() {
         $('#address-modal-1').show();
         $('#address-modal-2').hide();
         $('#show-address-modal').show();
-        $('#close-address-modal').addClass('hidden'); 
+        $('#close-address-modal').addClass('hidden');
     }
 </script>
 

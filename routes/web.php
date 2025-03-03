@@ -35,3 +35,6 @@ Route::get('/profile/invoice/detail/{id}', [TransactionController::class, 'invoi
 
 Route::post('/helper/check-voucher', [ActionController::class, 'check_voucher'])->middleware('auth')->name('check.voucher');
 Route::post('/helper/check-stock', [ActionController::class, 'check_stock'])->middleware('auth')->name('check.stock');
+
+//Invoice
+Route::get('/profile/invoice/{id}', [AuthController::class, 'view_invoice'])->middleware('auth')->name('view.invoice');

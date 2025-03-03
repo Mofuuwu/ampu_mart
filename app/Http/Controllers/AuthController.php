@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,5 +94,9 @@ class AuthController extends Controller
         $address = Address::findOrFail($id);
         $address->delete();
         return redirect()->route('profile')->with('success', 'Berhasil Menghapus Alamat Lama');
+    }
+    public function view_invoice($id) {
+        $invoice = Order::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
+        return view('public.invoice', ['invoice' => $invoice]);
     }
 }
