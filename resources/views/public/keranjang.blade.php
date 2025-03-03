@@ -20,7 +20,9 @@
                     @if ($products_in_cart->isNotEmpty())
                     @foreach ($products_in_cart as $product )
                     @php
-                    $productStock = $product->product->stock;
+                        $productStock = $product->product->stock;
+                        $product->total_price = $product->quantity * $product->product->price;
+                        $product->save();
                     @endphp
                     <div class="card w-full flex my-2 justify-between">
                         <div class="left-content flex">
