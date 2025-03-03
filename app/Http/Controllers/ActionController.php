@@ -160,17 +160,14 @@ class ActionController extends Controller
         $products = $request->input('products');
     
         foreach ($products as $product) {
-            // Ambil data produk terbaru dari database
             $dbProduct = Product::find($product['product_id']);
-    
             if (!$dbProduct) {
                 return response()->json(['success' => false, 'message' => 'Produk tidak ditemukan']);
             }
-    
+
             Log::info('Quantity: ' . $product['quantity']);
             Log::info('Stock (Updated from DB): ' . $dbProduct->stock);
-    
-            // Bandingkan dengan stok terbaru dari database
+            
             if ((int)$product['quantity'] > (int)$dbProduct->stock) {
                 Log::info('Condition triggered: Quantity exceeds stock');
                 return response()->json(['success' => false]);

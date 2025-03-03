@@ -44,7 +44,7 @@
                 <div class="mb-10">
                     <p class="text-darkblue font-bold">Informasi Kontak</p>
                     <p class="text-slate-500 text-sm">Kami akan menggunakan email ini untuk mengirimkan rincian dan pembaruan mengenai pesanan Anda</p>
-                    <input required type="text" placeholder="Email Address" name="email" class="w-full px-3 py-1 outline-none rounded-md mt-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50">
+                    <input id="email-input" required type="text" placeholder="Email Address" name="email" class="w-full px-3 py-1 outline-none rounded-md mt-1 font-semibold text-lightblue border-slate-400 border-2 border-opacity-50">
                 </div>
                 <div class="mb-10">
                     <p class="text-darkblue font-bold">Pengiriman</p>
@@ -160,7 +160,7 @@
                 <input type="hidden" name="starting_price" value="{{ $products_in_cart->sum('total_price')  }}">
 
                 <div class="mb-10">
-                    <button onclick="showConfirmModal(event)" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
+                    <button id="btn_checkout" data-products_in_cart="{{ $products_in_cart }}" onclick="showConfirmModal(event)" class="bg-lightblue text-center w-full font-bold text-white py-2 rounded-md">Lakukan Pemesanan</button>
                     <p class="mt-1 text-slate-500 text-sm px-2 md:px-20 text-center">Dengan melanjutkan pembelian, artinya anda menyetujui syarat dan ketentuan serta kebijakan dan privasi kami</p>
                 </div>
 
@@ -219,11 +219,39 @@
 
     function showConfirmModal(event) {
         event.preventDefault();
+        email_input = $('#email-input').val().trim(); 
+        if(!email_input) {
+            return alert('silahkan isi email terlebih dahulu')
+        }
 
         let isConfirmed = confirm('Konfirmasi Pembelian');
-        if (isConfirmed) {
-            $('#left-content').submit();
+        if (!isConfirmed) {
+            return
         }
+
+        var products_in_cart = $('#btn_checkout').data('products_in_cart');
+        $.ajax({
+        url: '{{ route("check.stock") }}',
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            products: products_in_cart,
+        },
+        success: function(response) {
+            console.log(response); 
+            if (response.success) {
+                $('#left-content').submit();
+            } else {
+                alert('Beberapa stok produk telah habis, halaman akan direfresh dan jumlah produk akan disesuaikan'); 
+                location.reload();
+            }
+        },
+        error: function() {
+            alert('Terjadi kesalahan pada server.');
+        }
+    });
     }
 
 
