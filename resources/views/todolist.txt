@@ -25,6 +25,8 @@
 - membuat halaman profil menjadi dinamis
 - jika keranjang 0 maka tidak bisa checkout
 - menyelesaikan sistem transaksi dan logika penambahakn data ke database
+- ketika tombol checkout di klik pada keranjang, kirimkan ajax ke server apakah produk yg tersedia melebihi yg di keranjang, jika melebihi 
+    maka refresh halaman dan munculkan alert serta perbarui produk di keranjang
 
 #Belum Selesai
 - menambahkan policy pada checkout, karena user masih tetap bisa mengakses halaman menggunakan url

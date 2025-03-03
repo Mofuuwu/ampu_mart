@@ -12,6 +12,24 @@
     location.href = '/keranjang';
 </script>
 @endif
+
+@foreach ($products_in_cart as $product )
+    @php
+    $productStock = $product->product->stock;
+    $product->total_price = $product->quantity * $product->product->price;
+    $product->save();
+    @endphp
+
+    @if ($product->quantity > $productStock)
+        @php
+            $product->quantity = $productStock;
+            $product->total_price = $product->quantity * $product->product->price;
+            $product->save();
+        @endphp
+    @endif
+
+@endforeach
+
 <section class="my-5 px-[5%] relative">
     <div class="w-[100%] m-auto">
         <form class="flex justify-start">

@@ -43,6 +43,7 @@
                                 @if ($product->quantity > $productStock)
                                 @php
                                 $product->quantity = $productStock;
+                                $product->total_price = $product->quantity * $product->product->price;
                                 $product->save();
                                 @endphp
                                 <div class="flex flex-col items-end">
@@ -101,15 +102,39 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    
     function cart_check() {
         var products_in_cart = $('#btn_checkout').data('products_in_cart');
         var addresses = $('#btn_checkout').data('addresses');
         if (!products_in_cart || products_in_cart.length === 0) {
             return alert('Tidak ada produk di keranjang');
-        } if (!addresses || addresses.length === 0) {
+        }
+        if (!addresses || addresses.length === 0) {
             return alert('Tambahkan Minimal 1 Lokasi Untuk Pengiriman Pesanan Di Profil')
         }
-        location.href = '/checkout';
+
+        // ajax untuk memeriksa apakah produk masih tersedia
+        $.ajax({
+            url: '{{ route("check.stock") }}',
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                products: products_in_cart,
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.href = '/checkout';
+                } else {
+                    alert('beberapa stok produk telah habis, halaman akan direfresh dan jumlah produk akan disesuaikan'); 
+                    location.reload();
+                }
+            },
+            error: function() {
+                alert('Terjadi kesalahan pada server.');
+            }
+        });
     }
 
     function addQuantity(element) {

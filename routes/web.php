@@ -34,3 +34,4 @@ Route::post('/checkout', [TransactionController::class, 'do_checkout'])->middlew
 Route::get('/profile/invoice/detail/{id}', [TransactionController::class, 'invoice_detail'])->middleware('auth');
 
 Route::post('/helper/check-voucher', [ActionController::class, 'check_voucher'])->middleware('auth')->name('check.voucher');
+Route::post('/helper/check-stock', [ActionController::class, 'check_stock'])->middleware('auth')->name('check.stock');

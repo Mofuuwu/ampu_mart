@@ -28,7 +28,15 @@ class PublicController extends Controller
     public function cart()
     {
         $addresses = Address::where('user_id', Auth::user()->id)->get();
-        $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
+        $user_id = Auth::user()->id;
+        $carts = Cart::where('user_id', $user_id)->get();
+
+        foreach ($carts as $cart) {
+            if ($cart->product->stock == 0) { 
+                $cart->delete(); 
+            }
+        }
+        $products_in_cart = Cart::where('user_id', $user_id)->get();
         return view('public.keranjang', [
             'products_in_cart' => $products_in_cart,
             'addresses' => $addresses
@@ -39,9 +47,9 @@ class PublicController extends Controller
         $addresses = Address::where('user_id', Auth::user()->id)->get();
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         foreach ($products_in_cart as $product) {
-            $productStock = $product->product->stock;  
+            $productStock = $product->product->stock;
             if ($product->quantity > $productStock) {
-                $product->quantity = $productStock;  
+                $product->quantity = $productStock;
                 $product->save();
             }
         }
@@ -50,33 +58,34 @@ class PublicController extends Controller
             'addresses' => $addresses
         ]);
     }
-    public function detail($id) {
+    public function detail($id)
+    {
         $product = Product::findOrFail($id);
         $related_products = Product::where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id) 
+            ->where('id', '!=', $product->id)
             ->orderBy('created_at', 'desc')
             ->get();
 
         if ($related_products->count() < 8) {
             $remaining_count = 8 - $related_products->count();
-            $other_products = Product::where('id', '!=', $product->id) 
-                ->where('category_id', '!=', $product->category_id) 
+            $other_products = Product::where('id', '!=', $product->id)
+                ->where('category_id', '!=', $product->category_id)
                 ->orderBy('created_at', 'desc')
-                ->take($remaining_count) 
+                ->take($remaining_count)
                 ->get();
-    
+
             $related_products = $related_products->merge($other_products);
         }
-    
+
         $tags = Category::withCount('products')->get();
-    
+
         return view('public.detail-page', [
             'product' => $product,
             'related_products' => $related_products,
             'tags' => $tags
         ]);
     }
-    
+
 
 
     //PROFILE
