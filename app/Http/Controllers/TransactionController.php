@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BalanceHistory;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
@@ -79,6 +80,24 @@ class TransactionController extends Controller
             }
         }
 
+        $billing_status = 'belum dibayar';
+        if($payment_option === 'use_balance') {
+            BalanceHistory::create([
+                'user_id' => $user_id,
+                'desc' => 'order',
+                'type' => 'decrease',
+                'order_id' => $newOrderId,
+                'amount' => $final_price,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+
+            $billing_status = 'dibayar';
+            $user = Auth::user();
+            $user->balance -= $final_price;
+            $user->save();
+        }
+
         $order_result = Order::create([
             'order_id' => $newOrderId,
             'user_id' => $user_id,
@@ -88,7 +107,7 @@ class TransactionController extends Controller
             'delivery_method' => $delivery_method,
             'payment_option' => $payment_option,
             'status' => 'diproses',
-            'billing' => 'belum dibayar',
+            'billing' => $billing_status,
             'note' => $note,
             'address_id' => $address_id,
             'order_date' => $now,

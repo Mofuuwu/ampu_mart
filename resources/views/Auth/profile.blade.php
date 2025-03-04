@@ -25,7 +25,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <button id="btn-riwayat" class="text-lightblue px-5 font-bold border-b-2 w-full text-start py-2" onclick="showSection('my-history-section', this)">Riwayat Pesanan</button>
+                            <button id="btn-riwayat_order" class="text-lightblue px-5 font-bold border-b-2 w-full text-start py-2" onclick="showSection('my-history_order-section', this)">Riwayat Pesanan</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="btn-riwayat_balance" class="text-lightblue px-5 font-bold border-b-2 w-full text-start py-2" onclick="showSection('my-history_balance-section', this)">Riwayat Saldo</button>
                         </td>
                     </tr>
                     <tr>
@@ -51,7 +56,7 @@
                     </div>
                 </div>
                 <div class="right-content w-full md:w-[full] bg-slate-200 border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] h-fit">
-                    <p class="font-semibold text-lightblue">Saldo Anda : Rp. {{ Auth::user()->balance }}</p>
+                    <p class="font-semibold text-lightblue">Saldo Anda : Rp. {{ number_format(Auth::user()->balance, 0, ',', '.') }}</p>
                 </div>
                 <form action="{{ route('change.password') }}" method="post" class="w-full bg-lightblue border-2 border-slate-400 border-opacity-50 p-5 rounded-[8px] text-white">
                     @csrf
@@ -110,7 +115,7 @@
                     </form>
                 </div>
             </div>
-            <div id="my-history-section" class="hidden">
+            <div id="my-history_order-section" class="hidden">
                 <p class="font-semibold text-lightblue">Riwayat Pesanan</p>
                 <ul class="mt-4 flex justify-between font-semibold text-lightblue">
                     <li>Kode Unik</li>
@@ -148,6 +153,51 @@
                             </div>
                         </div>
                     </a>
+                    @endforeach
+                </div>
+            </div>
+            <div id="my-history_balance-section" class="hidden">
+                <p class="font-semibold text-lightblue">Riwayat Saldo</p>
+                <ul class="mt-4 flex justify-between font-semibold text-lightblue">
+                    <li>Keterangan</li>
+                    <li>Jumlah</li>
+                </ul>
+                <div class="min-w-full min-h-[2px] bg-lightblue">
+                </div>
+
+                <div class="card-container w-full space-y-1 cursor-pointer mt-1">
+                    @foreach ($balance_histories as $b)
+                    @if ($b->type === 'increase')
+                    <div>
+                        <p class="text-sm text-gray-400">Senin, 20 Maret 2025</p>
+                        <div class="bg-green-400 w-full text-white font-semibold px-3 py-1">
+                            <div class="flex justify-between">
+                                <div class="flex-col flex justify-center">
+                                    <p>{{ $b->desc === 'deposite' ? 'Deposit' : 'Transaksi' }}</p>
+                                    <p class="text-sm"></p>
+                                </div>
+                                <div class="text-right flex-col flex justify-center">
+                                <p>+ Rp. {{ number_format($b->amount, 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @elseif ($b->type === 'decrease')
+                    <div>
+                        <p class="text-sm text-gray-400">Senin, 20 Maret 2025</p>
+                        <div class="bg-red-400 w-full text-white font-semibold px-3 py-1">
+                            <div class="flex justify-between">
+                                <div class="flex-col flex justify-center">
+                                    <p>{{ $b->desc === 'deposite' ? 'Deposit' : 'Transaksi' }}</p>
+                                    <p class="text-sm">{{ $b->order_id }}</p>
+                                </div>
+                                <div class="text-right flex-col flex justify-center">
+                                    <p>- Rp. {{ number_format($b->amount, 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     @endforeach
                 </div>
             </div>

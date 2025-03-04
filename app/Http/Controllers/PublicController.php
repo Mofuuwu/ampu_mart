@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\BalanceHistory;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
@@ -58,7 +59,7 @@ class PublicController extends Controller
         return view('public.checkout', [
             'products_in_cart' => $products_in_cart,
             'addresses' => $addresses,
-            'balance' => $balance
+            'balance' => $balance,
         ]);
     }
     public function detail($id)
@@ -94,9 +95,12 @@ class PublicController extends Controller
     //PROFILE
     public function profile()
     {
+        $user = Auth::user(); // Ambil user yang sedang login
+        $balance_histories = BalanceHistory::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
+
         $addresses = Address::where('user_id', Auth::user()->id)->get();
         $orders_history = Order::where('user_id', Auth::user()->id)->get();
-        return view('auth.profile', ['addresses' => $addresses, 'orders_history' => $orders_history]);
+        return view('auth.profile', ['addresses' => $addresses, 'orders_history' => $orders_history, 'balance_histories' => $balance_histories]);
     }
     public function login()
     {

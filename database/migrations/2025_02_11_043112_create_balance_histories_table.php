@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('balance_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('desc')->comment('contohnya : deposit, pembelian, dll');
+            $table->enum('desc', ['order', 'deposite']);
+            $table->unsignedBigInteger('order_id')->nullable();
             $table->enum( 'type', ['increase', 'decrease']);
             $table->decimal('amount', 12, 2);
             $table->timestamps();

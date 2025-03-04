@@ -34,13 +34,11 @@
 - jika completion date belum ada atau pesanan belum selesai, ganti ikon di invoice menjadi diproses
 - menambahkan detail transaksi / invoice pada after checkout
 - redirect setelah pembelian ke invoice
+- tidak bisa membeli menggunakan balance jika balance == 0
 
 #Belum Selesai
-- menambahkan policy pada checkout, karena user masih tetap bisa mengakses halaman menggunakan url
-- menambahkan focus : text-lightblue pada checkout
 - belajar ajax
 - membuat halaman admin
 - cetak invoice ke pdf
 - membuat fitur balance
-- tidak bisa membeli menggunakan balance jika balance == 0
 - policy pada lihat invoice

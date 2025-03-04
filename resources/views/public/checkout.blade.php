@@ -138,10 +138,10 @@
 
                     <!-- Gunakan Saldo Ampu Mart -->
                     <div class="flex items-center gap-2 mt-1">
-                        <input @disabled($balance == 0) type="radio" id="use-balance-btn" name="payment_option" value="use_balance" class="h-5 w-5 text-lightblue border-slate-400 border-2 focus:ring-0 hidden">
+                        <input type="radio" id="use-balance-btn" data-balance="{{ $balance }}" name="payment_option" value="use_balance" class="h-5 w-5 text-lightblue border-slate-400 border-2 focus:ring-0 hidden">
                         <label for="use-balance-btn" id="use-balance-label" class="flex-1 bg-white p-4 rounded-md border-slate-400 border-2 border-opacity-50 cursor-pointer">
                             <p id="use-balance-header" class="text-darkblue font-semibold text-sm">Gunakan Saldo Ampu Mart</p>
-                            <p id="use-balance-subheader" class="text-slate-500 text-sm">Saldo Anda {{ Auth::user()->balance }}</p>
+                            <p id="use-balance-subheader" class="text-slate-500 text-sm">Saldo Anda : Rp. {{ number_format(Auth::user()->balance, 0, ',', '.') }}</p>
                         </label>
                     </div>
                 </div>
@@ -404,6 +404,14 @@
         }).format(finalPrice);
 
         $('#final_price').text(formattedPrice);
+        let user_balance = $('#use-balance-btn').data('balance');
+        let use_balance_btn = $('#use-balance-btn');
+
+        if (user_balance < finalPrice) {
+            use_balance_btn.prop('disabled', true);
+        } else {
+            use_balance_btn.prop('disabled', false);
+        }
     }
 
 
@@ -414,11 +422,26 @@
     $('input[name="delivery_method"]').on('change', function() {
         if ($('#delivery-button').is(':checked')) {
             $('#delivery-price').text('Rp 20.000');
+            $('#pay-on-site-btn').prop('checked', true)
+            $('#pay-on-site-label').addClass('bg-lightblue').removeClass('bg-white');
+            $('#pay-on-site-header').addClass('text-white').removeClass('text-darkblue');
+            $('#pay-on-site-subheader').addClass('text-slate-200').removeClass('text-slate-500');
+
+            $('#use-balance-label').addClass('bg-white').removeClass('bg-lightblue');
+            $('#use-balance-header').addClass('text-darkblue').removeClass('text-white');
+            $('#use-balance-subheader').addClass('text-slate-500').removeClass('text-slate-200');
         } else if ($('#pickup-button').is(':checked')) {
             $('#delivery-price').text('Rp 0');
         }
         updateFinalPrice();
     });
+
+    // function disable_balance_btn() {
+    //     user_balance = $('#use-balance-btn').data('balance');
+    //     use_balance_btn = $('#use-balance-btn')
+        
+    // }
+    
 </script>
 
 
