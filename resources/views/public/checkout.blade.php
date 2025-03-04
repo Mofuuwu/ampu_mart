@@ -138,7 +138,7 @@
 
                     <!-- Gunakan Saldo Ampu Mart -->
                     <div class="flex items-center gap-2 mt-1">
-                        <input type="radio" id="use-balance-btn" name="payment_option" value="use_balance" class="h-5 w-5 text-lightblue border-slate-400 border-2 focus:ring-0 hidden">
+                        <input @disabled($balance == 0) type="radio" id="use-balance-btn" name="payment_option" value="use_balance" class="h-5 w-5 text-lightblue border-slate-400 border-2 focus:ring-0 hidden">
                         <label for="use-balance-btn" id="use-balance-label" class="flex-1 bg-white p-4 rounded-md border-slate-400 border-2 border-opacity-50 cursor-pointer">
                             <p id="use-balance-header" class="text-darkblue font-semibold text-sm">Gunakan Saldo Ampu Mart</p>
                             <p id="use-balance-subheader" class="text-slate-500 text-sm">Saldo Anda {{ Auth::user()->balance }}</p>

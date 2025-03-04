@@ -37,4 +37,5 @@ Route::post('/helper/check-voucher', [ActionController::class, 'check_voucher'])
 Route::post('/helper/check-stock', [ActionController::class, 'check_stock'])->middleware('auth')->name('check.stock');
 
 //Invoice
-Route::get('/profile/invoice/{id}', [AuthController::class, 'view_invoice'])->middleware('auth')->name('view.invoice');
+Route::get('/profile/invoice/{id}', [TransactionController::class, 'view_invoice'])->middleware('auth')->name('view.invoice');
+Route::post('/profile/invoice/cancel_transaction', [TransactionController::class, 'cancel_transaction'])->middleware('auth')->name('cancel.transaction');

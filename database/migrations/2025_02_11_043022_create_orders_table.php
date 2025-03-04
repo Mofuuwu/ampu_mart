@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
             $table->dateTime('order_date');
-            $table->dateTime('completion_date')->nullable();
+            $table->enum('status', ['diproses', 'dibatalkan', 'selesai']);
+            $table->enum('billing', ['dibayar', 'belum dibayar']);
             $table->timestamps();
         });
     }

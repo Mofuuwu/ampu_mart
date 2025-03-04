@@ -130,6 +130,9 @@
                             </div>
                             <div>
                                 <p class="font-semibold text-white">{{ $order->order_id }}</p>
+                                <p class="font-normal text-gray-200 text-sm text-left justify-end md:hidden flex">
+                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y - H:i') }}
+                                </p>
                                 <p class="font-semibold text-yellow-300 text-sm">
                                     Rp {{ number_format($order->final_price, 0, ',', '.') }}
                                 </p>
@@ -138,10 +141,10 @@
                         </div>
                         <div class="flex items-center">
                             <div>
-                                <p class="font-normal text-gray-200 text-sm text-left flex justify-end">
+                                <p class="font-normal text-gray-200 text-sm text-left justify-end md:flex hidden">
                                     {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y - H:i') }}
                                 </p>
-                                <p class="font-semibold text-white flex justify-end">{{ $order->completion_date ? 'Selesai' : 'Belum Selesai' }}</p>
+                                <p class="font-semibold text-white flex justify-end">{{ $order->status}}</p>
                             </div>
                         </div>
                     </a>

@@ -45,6 +45,7 @@ class PublicController extends Controller
     }
     public function checkout()
     {
+        $balance = Auth::user()->balance;
         $addresses = Address::where('user_id', Auth::user()->id)->get();
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         foreach ($products_in_cart as $product) {
@@ -56,7 +57,8 @@ class PublicController extends Controller
         }
         return view('public.checkout', [
             'products_in_cart' => $products_in_cart,
-            'addresses' => $addresses
+            'addresses' => $addresses,
+            'balance' => $balance
         ]);
     }
     public function detail($id)

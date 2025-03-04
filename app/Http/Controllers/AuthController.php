@@ -95,8 +95,5 @@ class AuthController extends Controller
         $address->delete();
         return redirect()->route('profile')->with('success', 'Berhasil Menghapus Alamat Lama');
     }
-    public function view_invoice($id) {
-        $invoice = Order::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
-        return view('public.invoice', ['invoice' => $invoice]);
-    }
+    
 }

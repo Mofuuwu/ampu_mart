@@ -87,6 +87,8 @@ class TransactionController extends Controller
             'final_price' => $final_price,
             'delivery_method' => $delivery_method,
             'payment_option' => $payment_option,
+            'status' => 'diproses',
+            'billing' => 'belum dibayar',
             'note' => $note,
             'address_id' => $address_id,
             'order_date' => $now,
@@ -124,11 +126,21 @@ class TransactionController extends Controller
             $voucher->remaining -= 1;
             $voucher->save();
         }
+        return redirect()->route('view.invoice', $newOrderId)->with('success', 'Berhasil Menambahkan Pesanan');
     }
 
-    public function invoice_detail($id)
-    {
-        $order_id = Order::findOrFail($id);
-        return view('public.after-checkout', ['order_id' => $order_id]);
+    public function view_invoice($id) {
+        $invoice = Order::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
+        return view('public.invoice', ['invoice' => $invoice]);
     }
+
+    public function cancel_transaction (Request $request) {
+        $order_id = $request->order_id;
+        $order = Order::findOrFail($order_id);
+        $order->status = 'dibatalkan';
+        $order->save();
+        return back()->with('success', 'Pesanan Berhasil Dibatalkan');
+    }
+
+
 }
