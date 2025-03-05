@@ -35,10 +35,30 @@
 - menambahkan detail transaksi / invoice pada after checkout
 - redirect setelah pembelian ke invoice
 - tidak bisa membeli menggunakan balance jika balance == 0
+- menyelesaikan fitur balance
+-> halaman user 
+-> halaman untuk menambah kategori
+-> halaman alamat
+-> halaman voucher
+-> menambahkan db transaction dan rollback jika terjadi error
+- untuk fitur hapus produk, produk bisa dihapus dan invoice tidak akan error karena sudah menambahkan kolom baru pada tabel order item 
+-> halaman produk 
+-> tab pada pesanan untuk mengelompokkan yg sudah selesai, dibatalkan, dan diproses
+-> menampilkan detail pesanan pada order
+-> halaman pesanan, ada fitur untuk mengganti status pesanan ke selesai
 
 #Belum Selesai
 - belajar ajax
-- membuat halaman admin
-- cetak invoice ke pdf
-- membuat fitur balance
 - policy pada lihat invoice
+- fitur untuk menampilkan produk terlaris pada index
+
+- membuat paginate product
+
+- membuat halaman admin
+-> halaman deposit
+-> riwayat penggunaan voucher / voucher usage
+-> mengganti ikon dan logo pada navbar
+
+#opsional
+- tampilkan detail voucher pada order
+- jika order menggunakan payment saldo ampu mart, buat tombol status pembayarannya tidak bisa diedit

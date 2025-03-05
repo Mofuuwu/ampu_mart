@@ -71,11 +71,11 @@
             @foreach ($invoice->order_items as $product)
             <div class="card flex justify-between my-1">
                 <div class="flex gap-2">
-                    <div class=" rounded-[8px] relative min-w-[100px] min-h-[100px] overflow-hidden bg-cover bg-center" style=" background-image: url('{{ asset("storage/" . $product->product->image_url) }}');">
+                    <div class=" rounded-[8px] relative min-w-[100px] min-h-[100px] overflow-hidden bg-cover bg-center" style=" background-image: url('{{ $product->product? asset("storage/" . $product->product->image_url) : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' }}');">
                     </div>
                     <div>
-                        <p class="text-darkblue font-semibold">{{ $product->product->name }}</p>
-                        <p class="text-lightblue font-semibold">Rp. {{ number_format($product->product->price, '0', ',', '.' )}}</p>
+                        <p class="text-darkblue font-semibold">{{ $product->product_name }}</p>
+                        <p class="text-lightblue font-semibold">Rp. {{ number_format($product->product_price, '0', ',', '.' )}}</p>
                     </div>
                 </div>
                 <div>

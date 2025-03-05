@@ -104,29 +104,37 @@ class ActionController extends Controller
 
     public function search_products(Request $request)
     {
-        $tags = Category::withCount('products')->get();
+        // Hanya menghitung produk dengan stok lebih dari 0
+        $tags = Category::withCount(['products' => function ($query) {
+            $query->where('stock', '>', 0);
+        }])->get();
+    
         $keyword = $request->get('keyword');
         $category = $request->get('category');
-        $query = Product::query();
-        $is_null = false;
-
+    
+        // Query produk hanya yang stoknya lebih dari 0
+        $query = Product::query()->where('stock', '>', 0);
+    
+        // Filter berdasarkan keyword
         if ($keyword) {
             $query->where('name', 'like', "%{$keyword}%");
         }
-
+    
+        // Filter berdasarkan kategori
         if ($category) {
             $query->whereHas('category', function ($q) use ($category) {
                 $q->where('name', 'like', "%{$category}%");
             });
         }
-
+    
         $products = $query->paginate(10);
-
+    
         return view('public.jelajahi-produk', [
             'products' => $products,
             'tags' => $tags,
         ]);
     }
+    
 
     public function check_voucher(Request $request)
     {

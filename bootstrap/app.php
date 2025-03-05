@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminHandler;
 use App\Http\Middleware\LoginRedirect;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -12,7 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        
+        $middleware->alias([
+            'adminHandler' => AdminHandler::class,
+        ]);
+        $middleware->append([
+            
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

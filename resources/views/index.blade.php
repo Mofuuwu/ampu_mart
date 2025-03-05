@@ -1,4 +1,5 @@
 @extends('templates.start-html')
+
 @include('components.navbar')
 
 @include('components.alert-success')

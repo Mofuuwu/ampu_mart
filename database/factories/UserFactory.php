@@ -48,7 +48,7 @@ class UserFactory extends Factory
             'email' => 'muhammadrifqi@gmail.com',
             'password' => bcrypt('muhammadrifqi'),
             'phone_number' => '087823928291',
-            'role' => '2',
+            'role' => '1',
             'balance' => 0,
         ]);
     }

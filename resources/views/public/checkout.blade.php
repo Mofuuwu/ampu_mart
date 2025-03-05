@@ -1,5 +1,10 @@
 @extends('templates.start-html')
 @include('components.navbar')
+@if (session('error'))
+    <script>
+        alert('terjadi error pada database, silahkan hubungi admin untuk memperbaikinya');
+    </script>
+@endif
 @if ($products_in_cart->isEmpty())
 <script>
     alert('Mohon tambahkan produk ke keranjang terlebih dahulu');
