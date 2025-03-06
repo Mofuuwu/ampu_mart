@@ -2,6 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\BestSellingProductWidget;
+use App\Filament\Widgets\DashboardStatsWidget;
+use App\Filament\Widgets\SoldItemsWidget;
+use App\Filament\Widgets\TotalOrdersWidget;
+use App\Filament\Widgets\TotalRevenueWidget;
+use App\Filament\Widgets\TotalUsersWidget;
+use App\Filament\Widgets\UnpaidOrdersWidget;
 use App\Http\Middleware\AdminHandler;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -31,6 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandName('Ampu Mart')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -39,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                DashboardStatsWidget::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -58,3 +66,5 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
+
+

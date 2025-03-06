@@ -51,12 +51,11 @@
 -> riwayat penggunaan voucher / voucher usage
 - membuat paginate product
 - policy pada lihat invoice
+- fitur untuk menampilkan produk terlaris pada index
 
 
 #Belum Selesai
-- belajar ajax
-- fitur untuk menampilkan produk terlaris pada index
-
 - membuat halaman admin
 -> halaman deposit
 -> mengganti ikon dan logo pada navbar
+-> dasbor
