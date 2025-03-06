@@ -21,7 +21,7 @@ class VoucherUsageResource extends Resource
     protected static ?string $navigationLabel = "Riwayat Voucher";
     protected static ?int $navigationSort = 8;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-clock';
 
     public static function form(Form $form): Form
     {

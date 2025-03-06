@@ -26,7 +26,7 @@ class VoucherResource extends Resource
     protected static ?string $navigationLabel = "Voucher";
     protected static ?int $navigationSort = 5;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-percent-badge';
 
     public static function form(Form $form): Form
     {

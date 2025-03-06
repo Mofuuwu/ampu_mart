@@ -25,7 +25,7 @@ class DepositeResource extends Resource
     protected static ?string $navigationLabel = "Deposit";
     protected static ?int $navigationSort = 6;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-banknotes';
 
     public static function form(Form $form): Form
     {
