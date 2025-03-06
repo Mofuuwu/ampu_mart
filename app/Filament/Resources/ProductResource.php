@@ -11,11 +11,12 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
 
@@ -77,6 +78,13 @@ class ProductResource extends Resource
                 ->label('Harga'),
                 TextColumn::make('stock')
                 ->label('Stok'),
+                BadgeColumn::make('order_items_sum_amount')
+                ->label('Terjual')
+                ->getStateUsing(fn($record) => $record->order_items()->sum('amount'))
+                ->colors([
+                    'gray' => fn($state) => $state == 0,
+                    'success' => fn($state) => $state > 0,
+                ]),
                 TextColumn::make('category.name')
                 ->label('Kategori'),
             ])

@@ -16,7 +16,11 @@ class PublicController extends Controller
     //PUBLIC - GENERAL
     public function index()
     {
-        $best_products = Product::limit(6)->get();
+        $best_products = Product::whereNot('stock', 0)->withSum('order_items', 'amount')
+            ->orderBy('order_items_sum_amount', 'desc')
+            ->limit(6)
+            ->get();
+
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         $newest_products = Product::orderBy('created_at', 'desc')->limit(6)->get();
         return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products, 'products_in_cart' => $products_in_cart]);
@@ -34,8 +38,8 @@ class PublicController extends Controller
         $carts = Cart::where('user_id', $user_id)->get();
 
         foreach ($carts as $cart) {
-            if ($cart->product->stock == 0) { 
-                $cart->delete(); 
+            if ($cart->product->stock == 0) {
+                $cart->delete();
             }
         }
         $products_in_cart = Cart::where('user_id', $user_id)->get();

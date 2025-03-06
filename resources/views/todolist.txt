@@ -50,11 +50,11 @@
 - jika order menggunakan payment saldo ampu mart, buat tombol status pembayarannya tidak bisa diedit
 -> riwayat penggunaan voucher / voucher usage
 - membuat paginate product
+- policy pada lihat invoice
 
 
 #Belum Selesai
 - belajar ajax
-- policy pada lihat invoice
 - fitur untuk menampilkan produk terlaris pada index
 
 - membuat halaman admin
