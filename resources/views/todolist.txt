@@ -46,6 +46,7 @@
 -> tab pada pesanan untuk mengelompokkan yg sudah selesai, dibatalkan, dan diproses
 -> menampilkan detail pesanan pada order
 -> halaman pesanan, ada fitur untuk mengganti status pesanan ke selesai
+- tampilkan detail voucher pada order
 
 #Belum Selesai
 - belajar ajax
@@ -60,5 +61,4 @@
 -> mengganti ikon dan logo pada navbar
 
 #opsional
-- tampilkan detail voucher pada order
 - jika order menggunakan payment saldo ampu mart, buat tombol status pembayarannya tidak bisa diedit

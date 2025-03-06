@@ -169,6 +169,7 @@ class OrderResource extends Resource
                         'dibayar' => 'Dibayar',
                         'belum dibayar' => 'Belum Dibayar',
                     ])
+                    ->disabled(fn(Get $get) => $get('payment_option') === 'use_balance')
                     ->required(),
             ]);
     }
