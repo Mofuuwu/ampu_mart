@@ -136,7 +136,7 @@
                             <div>
                                 <p class="font-semibold text-white">{{ $order->order_id }}</p>
                                 <p class="font-normal text-gray-200 text-sm text-left justify-end md:hidden flex">
-                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y - H:i') }}
+                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y / H:i') }}
                                 </p>
                                 <p class="font-semibold text-yellow-300 text-sm">
                                     Rp {{ number_format($order->final_price, 0, ',', '.') }}
@@ -147,7 +147,7 @@
                         <div class="flex items-center">
                             <div>
                                 <p class="font-normal text-gray-200 text-sm text-left justify-end md:flex hidden">
-                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y - H:i') }}
+                                    {{ \Carbon\Carbon::parse($order->order_date)->translatedFormat('l, d F Y / H:i') }}
                                 </p>
                                 <p class="font-semibold text-white flex justify-end">{{ $order->status}}</p>
                             </div>
@@ -169,11 +169,11 @@
                     @foreach ($balance_histories as $b)
                     @if ($b->type === 'increase')
                     <div>
-                        <p class="text-sm text-gray-400">Senin, 20 Maret 2025</p>
+                    <p class="text-sm text-gray-400">{{ \Carbon\Carbon::parse($b->created_at)->translatedFormat('l, d - F - Y / H:i') }}</p>
                         <div class="bg-green-400 w-full text-white font-semibold px-3 py-1">
                             <div class="flex justify-between">
                                 <div class="flex-col flex justify-center">
-                                    <p>{{ $b->desc === 'deposite' ? 'Deposit' : 'Transaksi' }}</p>
+                                    <p>{{ $b->desc === 'deposit' ? 'Deposit' : 'Transaksi' }}</p>
                                     <p class="text-sm"></p>
                                 </div>
                                 <div class="text-right flex-col flex justify-center">
@@ -184,11 +184,11 @@
                     </div>
                     @elseif ($b->type === 'decrease')
                     <div>
-                        <p class="text-sm text-gray-400">Senin, 20 Maret 2025</p>
+                    <p class="text-sm text-gray-400">{{ \Carbon\Carbon::parse($b->created_at)->translatedFormat('l, d - F - Y / H:i') }}</p>
                         <div class="bg-red-400 w-full text-white font-semibold px-3 py-1">
                             <div class="flex justify-between">
                                 <div class="flex-col flex justify-center">
-                                    <p>{{ $b->desc === 'deposite' ? 'Deposit' : 'Transaksi' }}</p>
+                                    <p>{{ $b->desc === 'deposit' ? 'Deposit' : 'Transaksi' }}</p>
                                     <p class="text-sm">{{ $b->order_id }}</p>
                                 </div>
                                 <div class="text-right flex-col flex justify-center">

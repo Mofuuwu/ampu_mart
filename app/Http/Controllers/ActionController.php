@@ -113,7 +113,7 @@ class ActionController extends Controller
         $category = $request->get('category');
     
         // Query produk hanya yang stoknya lebih dari 0
-        $query = Product::query()->where('stock', '>', 0);
+        $query = Product::query()->where('stock', '>', 0)->orderBy('created_at', 'desc');
     
         // Filter berdasarkan keyword
         if ($keyword) {

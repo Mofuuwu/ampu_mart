@@ -100,10 +100,10 @@ class PublicController extends Controller
     public function profile()
     {
         $user = Auth::user(); // Ambil user yang sedang login
-        $balance_histories = BalanceHistory::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
+        $balance_histories = BalanceHistory::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         $addresses = Address::where('user_id', Auth::user()->id)->get();
-        $orders_history = Order::where('user_id', Auth::user()->id)->get();
+        $orders_history = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('auth.profile', ['addresses' => $addresses, 'orders_history' => $orders_history, 'balance_histories' => $balance_histories]);
     }
     public function login()

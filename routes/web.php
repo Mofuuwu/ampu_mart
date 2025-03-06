@@ -39,3 +39,4 @@ Route::post('/helper/check-stock', [ActionController::class, 'check_stock'])->mi
 //Invoice
 Route::get('/profile/invoice/{id}', [TransactionController::class, 'view_invoice'])->middleware('auth')->name('view.invoice');
 Route::post('/profile/invoice/cancel_transaction', [TransactionController::class, 'cancel_transaction'])->middleware('auth')->name('cancel.transaction');
+Route::post('/profile/add_balance', [AuthController::class, 'add_balance'])->middleware('auth')->name('add.balance');

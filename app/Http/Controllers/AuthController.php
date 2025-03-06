@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\BalanceHistory;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -94,6 +95,22 @@ class AuthController extends Controller
         $address = Address::findOrFail($id);
         $address->delete();
         return redirect()->route('profile')->with('success', 'Berhasil Menghapus Alamat Lama');
+    }
+    public function add_balance(Request $request) {
+        $user = User::findOrFail($request->user_id);
+        $nominal = $request->nominal;
+        
+        $user->balance += $nominal;
+        $user->save();
+
+        BalanceHistory::create([
+            'user_id' => $user->id,
+            'desc' => 'deposit',
+            'order_id' => null,
+            'type' => 'increase',
+            'amount' => $nominal
+        ]);
+        return redirect('/admin/deposites/' . $user->id . '/add-balance');
     }
     
 }

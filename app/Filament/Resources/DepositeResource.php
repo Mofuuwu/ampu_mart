@@ -73,6 +73,8 @@ class DepositeResource extends Resource
     {
         return [
             'index' => Pages\ListDeposites::route('/'),
+            'edit' => Pages\EditDeposite::route('/{record}/add-balance'),
+            
         ];
     }
 }
