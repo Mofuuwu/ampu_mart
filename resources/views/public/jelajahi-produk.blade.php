@@ -52,7 +52,10 @@
         </div>
         @endif
     </div>
-
+    <div class="flex justify-center mt-4 items-center w-full mb-20">
+        <!-- Custom Styling Pagination -->
+        {{ $products->appends(['keyword' => request()->query('keyword')])->links('vendor.pagination.custom-pagination') }}
+    </div>
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -127,7 +127,7 @@ class ActionController extends Controller
             });
         }
     
-        $products = $query->paginate(10);
+        $products = $query->paginate(12);
     
         return view('public.jelajahi-produk', [
             'products' => $products,

@@ -47,18 +47,16 @@
 -> menampilkan detail pesanan pada order
 -> halaman pesanan, ada fitur untuk mengganti status pesanan ke selesai
 - tampilkan detail voucher pada order
+- jika order menggunakan payment saldo ampu mart, buat tombol status pembayarannya tidak bisa diedit
+-> riwayat penggunaan voucher / voucher usage
+- membuat paginate product
+
 
 #Belum Selesai
 - belajar ajax
 - policy pada lihat invoice
 - fitur untuk menampilkan produk terlaris pada index
 
-- membuat paginate product
-
 - membuat halaman admin
 -> halaman deposit
--> riwayat penggunaan voucher / voucher usage
 -> mengganti ikon dan logo pada navbar
-
-#opsional
-- jika order menggunakan payment saldo ampu mart, buat tombol status pembayarannya tidak bisa diedit
