@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,9 @@ class PublicController extends Controller
     //PUBLIC - GENERAL
     public function index()
     {
+        $users = User::count();
+        $orders = Order::count();
+        $products = Product::count();
         $best_products = Product::whereNot('stock', 0)->withSum('order_items', 'amount')
             ->orderBy('order_items_sum_amount', 'desc')
             ->limit(6)
@@ -23,7 +27,7 @@ class PublicController extends Controller
 
         $products_in_cart = Cart::where('user_id', Auth::user()->id)->get();
         $newest_products = Product::orderBy('created_at', 'desc')->limit(6)->get();
-        return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products, 'products_in_cart' => $products_in_cart]);
+        return view('index', ['best_products' => $best_products, 'newest_products' => $newest_products, 'products_in_cart' => $products_in_cart, 'users' => $users, 'orders' => $orders, 'products' => $products]);
     }
     // public function explore_products()
     // {

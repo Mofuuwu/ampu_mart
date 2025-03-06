@@ -23,7 +23,7 @@
                 </svg>
             </div>
             <div class="flex-col flex items-center md:items-start">
-                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">100+</p>
+                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">{{ $products }}</p>
                 <p class="text-white text-sm font-bold font-sour-gummy md:text-md md:text-sm">Produk</p>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 </svg>
             </div>
             <div class="flex-col flex items-center md:items-start">
-                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">400+</p>
+                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">{{ $orders }}</p>
                 <p class="text-white text-sm font-bold font-sour-gummy md:text-md md:text-sm">Penjualan</p>
             </div>
         </div>
@@ -46,7 +46,7 @@
 
             </div>
             <div class="flex-col flex items-center md:items-start">
-                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">20</p>
+                <p class="text-white text-lg font-semibold font-sour-gummy lg:text-2xl md:text-xl sm:text-sm">{{ $users }}</p>
                 <p class="text-white text-sm font-bold font-sour-gummy md:text-md md:text-sm">User</p>
             </div>
         </div>
