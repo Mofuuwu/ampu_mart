@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BalanceHistory;
-use Illuminate\Http\Request;
 use App\Models\Cart;
-use App\Models\Product;
-use App\Models\Category;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Voucher;
+use App\Models\Category;
+use App\Models\OrderItem;
 use App\Models\VoucherUsage;
+use Illuminate\Http\Request;
+use App\Models\BalanceHistory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
 {
@@ -177,7 +178,10 @@ class TransactionController extends Controller
     
 
     public function view_invoice($id) {
-        $invoice = Order::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
+
+        $invoice = Order::findOrFail($id); // Pastikan order ditemukan
+
+        Gate::authorize('view', $invoice);
         return view('public.invoice', ['invoice' => $invoice]);
     }
 
