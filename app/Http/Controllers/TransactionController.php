@@ -111,6 +111,8 @@ class TransactionController extends Controller
                 'user_id' => $user_id,
                 'email' => $user_email,
                 'price' => $starting_price,
+                'voucher_code' => $voucher_code,
+                'voucher_discount' => $discount_value,
                 'final_price' => $final_price,
                 'delivery_method' => $delivery_method,
                 'payment_option' => $payment_option,

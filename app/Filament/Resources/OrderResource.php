@@ -20,7 +20,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Get;
-
+use Filament\Forms\Components\Section;
 
 class OrderResource extends Resource
 {
@@ -55,7 +55,57 @@ class OrderResource extends Resource
                     ->disabled()
                     ->required(),
 
-                TextInput::make('price')
+                Textarea::make('note')
+                    ->label('Catatan')
+                    ->nullable()
+                    ->columnSpan(2)
+                    ->formatStateUsing(fn($state) => $state ?? '-')
+                    ->disabled(),
+
+                Select::make('address_id')
+                    ->label('Alamat')
+                    ->relationship('address', 'address')
+                    ->searchable()
+                    ->disabled()
+                    ->columnSpan(2)
+                    ->preload()
+                    ->required(),
+
+                DateTimePicker::make('order_date')
+                    ->label('Tanggal Order')
+                    ->required()
+                    ->columnSpan(2)
+                    ->disabled(),
+
+                Repeater::make('order_items') 
+                    ->relationship('order_items') 
+                    ->label('Daftar Produk Yang Dibeli')
+                    ->columnSpan(2)
+                    ->schema([
+                        TextInput::make('product_name')
+                            ->label('Nama Produk')
+                            ->disabled(),
+
+                        TextInput::make('product_price')
+                            ->label('Harga Satuan')
+                            ->numeric()
+                            ->disabled(),
+
+                        TextInput::make('amount')
+                            ->label('Jumlah')
+                            ->numeric()
+                            ->disabled(),
+
+                        TextInput::make('total_price')
+                            ->label('Total Harga')
+                            ->numeric()
+                            ->disabled(),
+                    ])
+                    ->columns(4) 
+                    ->disableItemCreation()
+                    ->disableItemDeletion()
+                    ->disableItemMovement(),
+                    TextInput::make('price')
                     ->label('Harga Awal')
                     ->disabled()
                     ->required()
@@ -66,9 +116,19 @@ class OrderResource extends Resource
                     ->label('Ongkos Kirim')
                     ->disabled()
                     ->formatStateUsing(fn(Get $get) => $get('delivery_method') === 'delivery' ? '20.000' : '0')
-                    ->dehydrated(false), // Tidak menyimpan ke database
+                    ->dehydrated(false), 
+                    
+                    TextInput::make('voucher_code')
+                    ->label('Kode Voucher')
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn($state) => $state ?? '-'),                
 
-
+                TextInput::make('voucher_discount')
+                    ->label('Potongan Harga')
+                    ->disabled()
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
+                    ->dehydrated(false),
 
                 TextInput::make('final_price')
                     ->label('Total Harga')
@@ -110,56 +170,6 @@ class OrderResource extends Resource
                         'belum dibayar' => 'Belum Dibayar',
                     ])
                     ->required(),
-
-                Textarea::make('note')
-                    ->label('Catatan')
-                    ->nullable()
-                    ->columnSpan(2)
-                    ->disabled(),
-
-                Select::make('address_id')
-                    ->label('Alamat')
-                    ->relationship('address', 'address')
-                    ->searchable()
-                    ->disabled()
-                    ->columnSpan(2)
-                    ->preload()
-                    ->required(),
-
-                DateTimePicker::make('order_date')
-                    ->label('Tanggal Order')
-                    ->required()
-                    ->columnSpan(2)
-                    ->disabled(),
-
-                Repeater::make('order_items') // Relasi ke order_items
-                    ->relationship('order_items') // Nama relasi di model Order
-                    ->label('Daftar Produk Yang Dibeli')
-                    ->columnSpan(2)
-                    ->schema([
-                        TextInput::make('product_name')
-                            ->label('Nama Produk')
-                            ->disabled(),
-
-                        TextInput::make('product_price')
-                            ->label('Harga Satuan')
-                            ->numeric()
-                            ->disabled(),
-
-                        TextInput::make('amount')
-                            ->label('Jumlah')
-                            ->numeric()
-                            ->disabled(),
-
-                        TextInput::make('total_price')
-                            ->label('Total Harga')
-                            ->numeric()
-                            ->disabled(),
-                    ])
-                    ->columns(4) // Mengatur jumlah kolom dalam grid
-                    ->disableItemCreation()
-                    ->disableItemDeletion()
-                    ->disableItemMovement(),
             ]);
     }
 
@@ -201,7 +211,7 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Update Pesanan'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

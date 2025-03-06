@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('email');
             $table->decimal('price', 12, 2);
+            $table->string('voucher_code')->nullable();
+            $table->decimal('voucher_discount', 12, 2)->nullable();
             $table->decimal('final_price', 12, 2);
             $table->string('delivery_method');
             $table->string('payment_option');

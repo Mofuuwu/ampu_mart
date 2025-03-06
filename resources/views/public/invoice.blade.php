@@ -109,11 +109,13 @@
             <p class="text-darkblue font-semibold font-sm">
                 Voucher :
                 <span class="text-lightblue">
-                    @if ($invoice->voucher_usage)
-                    Rp. {{ number_format($invoice->final_price - $invoice->price, 0, ',', '.') }}
-                    @else
-                    -
-                    @endif
+                    {{ $invoice->voucher_code }}
+                </span>
+            </p>
+            <p class="text-darkblue font-semibold font-sm">
+                Potongan Harga :
+                <span class="text-lightblue">
+                    Rp. {{ number_format($invoice->voucher_discount, 0, ',', '.') }}
                 </span>
             </p>
             @endif

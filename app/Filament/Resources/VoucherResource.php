@@ -108,10 +108,17 @@ class VoucherResource extends Resource
                         $record->type === 'percentage' ? $state . '%' : 'Rp ' . number_format($state, 2, ',', '.')
                     ),
 
-                BadgeColumn::make('valid')
+                    BadgeColumn::make('valid')
                     ->label('Status')
-                    ->getStateUsing(fn($record) => now()->between($record->valid_from, $record->valid_until) ? 'Valid' : 'Tidak Valid')
-                    ->color(fn($state) => $state === 'Valid' ? 'success' : 'danger'),
+                    ->getStateUsing(fn($record) => 
+                        $record->remaining == 0 
+                            ? 'Habis' 
+                            : (now()->between($record->valid_from, $record->valid_until) ? 'Valid' : 'Tidak Valid')
+                    )
+                    ->color(fn($state) => 
+                        $state === 'Valid' ? 'success' : ($state === 'Habis' ? 'warning' : 'danger')
+                    ),
+                
             ])
             ->filters([
                 //

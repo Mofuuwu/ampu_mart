@@ -112,7 +112,7 @@
                             <p class="text-slate-500 text-sm">Gratis</p>
                         </div>
                         <p class="text-slate-500 text-sm">Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia Babakan, KalimanahPurbalinggaJawa Tengah53371Indonesia</p>
-                        <p class="text-lightblue text-sm font-semibold">Jadwal pengambilan akan diumumkan kemudian</p>
+                        <!-- <p class="text-lightblue text-sm font-semibold">Jadwal pengambilan akan diumumkan kemudian</p> -->
                     </div>
                 </div>
                 <div class="mb-10">
