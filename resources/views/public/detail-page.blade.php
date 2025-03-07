@@ -3,12 +3,16 @@
 
 <section class="my-5 px-[5%]">
     <div class="w-[100%] m-auto">
-        <form class="flex md:flex-row justify-between flex-col">
-            <p class="text-md md:text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Detail Produk</p>
-            <div class="flex items-center gap-2">
-                <input placeholder="Cari barang" type="text" class=" bg-slate-300 py-1 h-full w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy">
-                <button type="submit" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Cari</button>
+        <form action="{{ route('search.product') }}" method="get" class="flex items-center gap-2 justify-between">
+            <div>
+                <p class="text-md md:text-2xl font-bold text-lightblue font-sour-gummy flex items-center">Detail Produk</p>
             </div>
+                <div>
+                <a href="/jelajahi-produk" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Clear</a>
+                <input name="keyword" placeholder="Cari barang" type="text" class=" bg-slate-300 py-2 w-full md:w-[300px] rounded-[12px] px-3 focus:outline-lightblue text-lightblue placeholder:font-sour-gummy font-sour-gummy" value="{{ request()->get('keyword') }}">
+                <input type="hidden" name="category" value="{{ request()->get('category') }}"> <!-- Menambahkan kategori di form -->
+                <button type="submit" class="font-semibold text-white shadow-md hover:bg-hoverblue bg-lightblue px-3 py-1 md:px-4 md:py-2 rounded-[12px] font-sour-gummy">Cari</button>
+                </div>
         </form>
     </div>
     <div class="w-full flex flex-col-reverse lg:flex-row justify-between mt-8 my-20 gap-4">
@@ -23,7 +27,7 @@
                 <!-- @include('components.tag') -->
                 <ul class="text-darkblue underline md:text:md text-sm">
                     @foreach ($tags as $tag)
-                    <li><a href="/jelajahi-produk/kategori/{{ $tag->name }}">{{ $tag->name }} ({{ $tag->products_count }})</a></li>
+                    <li><a href=".?category={{ $tag->name }}&keyword={{ request()->get('keyword') }}">{{ $tag->name }} ({{ $tag->products_count }})</a></li>
                     @endforeach
                 </ul>
             </div>

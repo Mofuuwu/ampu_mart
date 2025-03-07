@@ -41,7 +41,7 @@ class ActionController extends Controller
                 'total_price' => $price,
             ]);
 
-            return response()->json(['success' => true, 'message' => 'Data added to cart successfully']);
+            return response()->json(['success' => true, 'message' => 'Berhasil Menambahkan Produk Ke Keranjang']);
         }
     }
 
